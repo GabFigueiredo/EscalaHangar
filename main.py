@@ -19,24 +19,24 @@ class diaServentia:
     def __init__ (self, dia):
         self.dia = dia
         # Mídia
-        self.quemTiraFoto = None
-        self.quemFazStory = None
-        self.quemFicaNaMesa = None
+        self.Foto = None
+        self.Story = None
+        self.Mesa = None
         
         # Teens
         self.professorPré = None
         self.professorKids = None
         self.professorBabys = None
-        self.auxiliares = []
+        self.Auxiliares = []
 
-        # Louvor
-        self.ministro = None
-        self.backs = []
-        self.bateria = None
-        self.teclado = None
-        self.guitarra = None
-        self.baixo = None
-        self.violão = None
+        # LOUVOR
+        self.Ministro = None
+        self.Backs = []
+        self.Bateria = None
+        self.Teclado = None
+        self.Guitarra = None
+        self.Baixo = None
+        self.Violão = None
     
 random.shuffle(Voluntários)
 
@@ -78,415 +78,85 @@ for dia in diasDeSabado:
     temp = diaServentia(dia)
     objetoDosDiasdeSabado.append(temp)
 
-# Back-end da Mídia
-def fazerEscalaDaMídia():
+funcao_para_atributo = {
+        "foto": "Foto",
+        "story": "Story",
+        "mesa": "Mesa",
+        "pré": "professorPré",
+        "kids": "professorKids",
+        "babys": "professorBabys"
+    }
 
-    ## QUINTA FEIRA ###
-    # Fotos
-    for diaDeQuinta in objetoDosDiasdeQuinta:
-        i = 0
-        metaParaTodos = 1
-        while i != len(Voluntários):
-            if (
-                "Mídia" in Voluntários[i]["ministerios"]
-                and Voluntários[i]["funcoes"]["foto"]
-                and Voluntários[i]["diasServidos"] < metaParaTodos
-                and diaDeQuinta.dia not in Voluntários[i]["servindoNosDias"]
-                and Voluntários[i]["quinta"]
-            ):    
-                diaDeQuinta.quemTiraFoto = Voluntários[i]["nome"]
-                Voluntários[i]["diasServidos"] += 1
-                Voluntários[i]["servindoNosDias"].append(diaDeQuinta.dia)
-                break;
-            if Voluntários[i] == Voluntários[-1]:
-                metaParaTodos += 1 
-                i = 0
-            else:
-                i += 1
-    # Story
-    for diaDeQuinta in objetoDosDiasdeQuinta:
-        i = 0
-        metaParaTodos = 1
-        while i != len(Voluntários):
-            if (
-                "Mídia" in Voluntários[i]["ministerios"]
-                and Voluntários[i]["funcoes"]["story"]
-                and Voluntários[i]["diasServidos"] < metaParaTodos
-                and diaDeQuinta.dia not in Voluntários[i]["servindoNosDias"]
-                and Voluntários[i]["quinta"]
-            ):    
-                diaDeQuinta.quemFazStory = Voluntários[i]["nome"]
-                Voluntários[i]["diasServidos"] += 1
-                Voluntários[i]["servindoNosDias"].append(diaDeQuinta.dia)
-                # print(f"Dia {diaDeQuinta.dia} = {Voluntários[i]["nome"]}")
-                break;
-            if Voluntários[i] == Voluntários[-1]:
-                metaParaTodos += 1 
-                i = 0
-            else:
-                i += 1
-    # Mesa 
-    for diaDeQuinta in objetoDosDiasdeQuinta:
-        i = 0
-        metaParaTodos = 1
-        while i != len(Voluntários):
-            if (
-                "Mídia" in Voluntários[i]["ministerios"]
-                and Voluntários[i]["funcoes"]["mesa"]
-                and Voluntários[i]["diasServidos"] < metaParaTodos
-                and diaDeQuinta.dia not in Voluntários[i]["servindoNosDias"]
-                and Voluntários[i]["quinta"]
-            ):    
-                diaDeQuinta.quemFicaNaMesa = Voluntários[i]["nome"]
-                Voluntários[i]["diasServidos"] += 1
-                Voluntários[i]["servindoNosDias"].append(diaDeQuinta.dia)
-                break;
-            if Voluntários[i] == Voluntários[-1]:
-                metaParaTodos += 1 
-                i = 0
-            else:
-                i += 1
+def fazerUmaEscala(ministerio, funcao, dia):
 
-    ## DOMINGO ###
-    #Fotos
-    for diaDeDomingo in objetoDosDiasdeDomingo:
-        i = 0
-        metaParaTodos = 1
-        while i != len(Voluntários):
-            if (
-                "Mídia" in Voluntários[i]["ministerios"]
-                and Voluntários[i]["funcoes"]["foto"]
-                and Voluntários[i]["diasServidos"] < metaParaTodos
-                and diaDeDomingo.dia not in Voluntários[i]["servindoNosDias"]
-                and Voluntários[i]["domingo"]
-            ):    
-                diaDeDomingo.quemTiraFoto = Voluntários[i]["nome"]
-                Voluntários[i]["diasServidos"] += 1
-                Voluntários[i]["servindoNosDias"].append(diaDeDomingo.dia)
-                break;
-            if Voluntários[i] == Voluntários[-1]:
-                metaParaTodos += 1 
-                i = 0
-            else:
-                i += 1
+    if dia == "quinta":
+        for diaDeQuinta in objetoDosDiasdeQuinta:
+            random.shuffle(Voluntários)
+            i = 0
+            metaParaTodos = 1
+            while i != len(Voluntários):  
+                if (
+                    ministerio in Voluntários[i]["ministerios"]
+                    and funcao in Voluntários[i]["funcoes"]
+                    and Voluntários[i]["diasServidos"] < metaParaTodos
+                    and diaDeQuinta.dia not in Voluntários[i]["servindoNosDias"]
+                    and Voluntários[i]["quinta"]
+                ):    
+                    if funcao in funcao_para_atributo:
+                        atributo = funcao_para_atributo[funcao]
+                        setattr(diaDeQuinta, atributo, Voluntários[i]["nome"])
 
-    for diaDeDomingo in objetoDosDiasdeDomingo:
-        i = 0
-        metaParaTodos = 1
-        while i != len(Voluntários):
-            if (
-                "Mídia" in Voluntários[i]["ministerios"]
-                and Voluntários[i]["funcoes"]["story"]
-                and Voluntários[i]["diasServidos"] < metaParaTodos
-                and diaDeDomingo.dia not in Voluntários[i]["servindoNosDias"]
-                and Voluntários[i]["domingo"]
-            ):    
-                diaDeDomingo.quemFazStory = Voluntários[i]["nome"]
-                Voluntários[i]["diasServidos"] += 1
-                Voluntários[i]["servindoNosDias"].append(diaDeDomingo.dia)
-                break;
-            if Voluntários[i] == Voluntários[-1]:
-                metaParaTodos += 1 
-                i = 0
-            else:
-                i += 1
+                    Voluntários[i]["diasServidos"] += 1
+                    Voluntários[i]["servindoNosDias"].append(diaDeQuinta.dia)
+                    break;
+                if Voluntários[i] == Voluntários[-1]:
+                    metaParaTodos += 1 
+                    i = 0
+                else:
+                    i += 1
 
-    for diaDeDomingo in objetoDosDiasdeDomingo:
-        i = 0
-        metaParaTodos = 1
-        while i != len(Voluntários):
-            if (
-                "Mídia" in Voluntários[i]["ministerios"]
-                and Voluntários[i]["funcoes"]["mesa"]
-                and Voluntários[i]["diasServidos"] < metaParaTodos
-                and diaDeDomingo.dia not in Voluntários[i]["servindoNosDias"]
-                and Voluntários[i]["domingo"]
-            ):    
-                diaDeDomingo.quemFicaNaMesa = Voluntários[i]["nome"]
-                Voluntários[i]["diasServidos"] += 1
-                Voluntários[i]["servindoNosDias"].append(diaDeDomingo.dia)
-                break;
-            if Voluntários[i] == Voluntários[-1]:
-                metaParaTodos += 1 
-                i = 0
-            else:
-                i += 1
-
-    ## QUINTA FEIRA ###
-    # Fotos
-    for diaDeQuinta in objetoDosDiasdeQuinta:
-        i = 0
-        metaParaTodos = 1
-        while i != len(Voluntários):
-            if (
-                "Mídia" in Voluntários[i]["ministerios"]
-                and Voluntários[i]["funcoes"]["foto"]
-                and Voluntários[i]["diasServidos"] < metaParaTodos
-                and diaDeQuinta.dia not in Voluntários[i]["servindoNosDias"]
-                and Voluntários[i]["quinta"]
-            ):    
-                diaDeQuinta.quemTiraFoto = Voluntários[i]["nome"]
-                Voluntários[i]["diasServidos"] += 1
-                Voluntários[i]["servindoNosDias"].append(diaDeQuinta.dia)
-                break;
-            if Voluntários[i] == Voluntários[-1]:
-                metaParaTodos += 1 
-                i = 0
-            else:
-                i += 1
-
-    # Story
-    for diaDeQuinta in objetoDosDiasdeQuinta:
-        i = 0
-        metaParaTodos = 1
-        while i != len(Voluntários):
-            if (
-                "Mídia" in Voluntários[i]["ministerios"]
-                and Voluntários[i]["funcoes"]["story"]
-                and Voluntários[i]["diasServidos"] < metaParaTodos
-                and diaDeQuinta.dia not in Voluntários[i]["servindoNosDias"]
-                and Voluntários[i]["quinta"]
-            ):    
-                diaDeQuinta.quemFazStory = Voluntários[i]["nome"]
-                Voluntários[i]["diasServidos"] += 1
-                Voluntários[i]["servindoNosDias"].append(diaDeQuinta.dia)
-                break;
-            if Voluntários[i] == Voluntários[-1]:
-                metaParaTodos += 1 
-                i = 0
-            else:
-                i += 1
-    # Mesa 
-    for diaDeQuinta in objetoDosDiasdeQuinta:
-        i = 0
-        metaParaTodos = 1
-        while i != len(Voluntários):
-            if (
-                "Mídia" in Voluntários[i]["ministerios"]
-                and Voluntários[i]["funcoes"]["mesa"]
-                and Voluntários[i]["diasServidos"] < metaParaTodos
-                and diaDeQuinta.dia not in Voluntários[i]["servindoNosDias"]
-                and Voluntários[i]["quinta"]
-            ):    
-                diaDeQuinta.quemFicaNaMesa = Voluntários[i]["nome"]
-                Voluntários[i]["diasServidos"] += 1
-                Voluntários[i]["servindoNosDias"].append(diaDeQuinta.dia)
-                break;
-            if Voluntários[i] == Voluntários[-1]:
-                metaParaTodos += 1 
-                i = 0
-            else:
-                i += 1
-
-    ## DOMINGO ###
-    # Fotos
-    for diaDeDomingo in objetoDosDiasdeDomingo:
-        i = 0
-        metaParaTodos = 1
-        while i != len(Voluntários):
-            if (
-                "Mídia" in Voluntários[i]["ministerios"]
-                and Voluntários[i]["funcoes"]["foto"]
-                and Voluntários[i]["diasServidos"] < metaParaTodos
-                and diaDeDomingo.dia not in Voluntários[i]["servindoNosDias"]
-                and Voluntários[i]["domingo"]
-            ):    
-                diaDeDomingo.quemTiraFoto = Voluntários[i]["nome"]
-                Voluntários[i]["diasServidos"] += 1
-                Voluntários[i]["servindoNosDias"].append(diaDeDomingo.dia)
-                break;
-            if Voluntários[i] == Voluntários[-1]:
-                metaParaTodos += 1 
-                i = 0
-            else:
-                i += 1
-
-    for diaDeDomingo in objetoDosDiasdeDomingo:
-        i = 0
-        metaParaTodos = 1
-        while i != len(Voluntários):
-            if (
-                "Mídia" in Voluntários[i]["ministerios"]
-                and Voluntários[i]["funcoes"]["story"]
-                and Voluntários[i]["diasServidos"] < metaParaTodos
-                and diaDeDomingo.dia not in Voluntários[i]["servindoNosDias"]
-                and Voluntários[i]["domingo"]
-            ):    
-                diaDeDomingo.quemFazStory = Voluntários[i]["nome"]
-                Voluntários[i]["diasServidos"] += 1
-                Voluntários[i]["servindoNosDias"].append(diaDeDomingo.dia)
-                break;
-            if Voluntários[i] == Voluntários[-1]:
-                metaParaTodos += 1 
-                i = 0
-            else:
-                i += 1
-
-    for diaDeDomingo in objetoDosDiasdeDomingo:
-        i = 0
-        metaParaTodos = 1
-        while i != len(Voluntários):
-            if (
-                "Mídia" in Voluntários[i]["ministerios"]
-                and Voluntários[i]["funcoes"]["mesa"]
-                and Voluntários[i]["diasServidos"] < metaParaTodos
-                and diaDeDomingo.dia not in Voluntários[i]["servindoNosDias"]
-                and Voluntários[i]["domingo"]
-            ):    
-                diaDeDomingo.quemFicaNaMesa = Voluntários[i]["nome"]
-                Voluntários[i]["diasServidos"] += 1
-                Voluntários[i]["servindoNosDias"].append(diaDeDomingo.dia)
-                break;
-            if Voluntários[i] == Voluntários[-1]:
-                metaParaTodos += 1 
-                i = 0
-            else:
-                i += 1
-
-# Back-end do Fly
-def fazerEscalaDoFly():
-
-    ## QUINTA FEIRA ###
-    # Pré-Teens
-    for diaDeQuinta in objetoDosDiasdeQuinta:
-        i = 0
-        metaParaTodos = 1
-        while i != len(Voluntários):
-
-            if (
-                "Fly" in Voluntários[i]["ministerios"]
-                and Voluntários[i]["funcoes"]["pré"]
-                and Voluntários[i]["diasServidos"] < metaParaTodos
-                and diaDeQuinta.dia not in Voluntários[i]["servindoNosDias"]
-                and Voluntários[i]["quinta"]
-            ):    
-                diaDeQuinta.professorPré = Voluntários[i]["nome"]
-                Voluntários[i]["diasServidos"] += 1
-                Voluntários[i]["servindoNosDias"].append(diaDeQuinta.dia)
-                break;
-            if Voluntários[i] == Voluntários[-1]:
-                metaParaTodos += 1 
-                i = 0
-            else:
-                i += 1
-
-    # Kids
-    for diaDeQuinta in objetoDosDiasdeQuinta:
-        i = 0
-        metaParaTodos = 1
-        while i != len(Voluntários):
-            if (
-                "Fly" in Voluntários[i]["ministerios"]
-                and Voluntários[i]["funcoes"]["kids"]
-                and Voluntários[i]["diasServidos"] < metaParaTodos
-                and diaDeQuinta.dia not in Voluntários[i]["servindoNosDias"]
-                and Voluntários[i]["quinta"]
-            ):    
-                diaDeQuinta.professorKids = Voluntários[i]["nome"]
-                Voluntários[i]["diasServidos"] += 1
-                Voluntários[i]["servindoNosDias"].append(diaDeQuinta.dia)
-                # print(f"Dia {diaDeQuinta.dia} = {Voluntários[i]["nome"]}")
-                break;
-            if Voluntários[i] == Voluntários[-1]:
-                metaParaTodos += 1 
-                i = 0
-            else:
-                i += 1
-    # Babys 
-    for diaDeQuinta in objetoDosDiasdeQuinta:
-        i = 0
-        metaParaTodos = 1
-        while i != len(Voluntários):
-            if (
-                "Fly" in Voluntários[i]["ministerios"]
-                and Voluntários[i]["funcoes"]["babys"]
-                and Voluntários[i]["diasServidos"] < metaParaTodos
-                and diaDeQuinta.dia not in Voluntários[i]["servindoNosDias"]
-                and Voluntários[i]["quinta"]
-            ):    
-                diaDeQuinta.professorBabys = Voluntários[i]["nome"]
-                Voluntários[i]["diasServidos"] += 1
-                Voluntários[i]["servindoNosDias"].append(diaDeQuinta.dia)
-                break;
-            if Voluntários[i] == Voluntários[-1]:
-                metaParaTodos += 1 
-                i = 0
-            else:
-                i += 1
-
-    # Pré-teens
-    for diaDeDomingo in objetoDosDiasdeDomingo:
-        i = 0
-        metaParaTodos = 1
-        while i != len(Voluntários):
-            if (
-                "Fly" in Voluntários[i]["ministerios"]
-                and Voluntários[i]["funcoes"]["pré"]
-                and Voluntários[i]["diasServidos"] < metaParaTodos
-                and diaDeDomingo.dia not in Voluntários[i]["servindoNosDias"]
-                and Voluntários[i]["domingo"]
-            ):    
-                diaDeDomingo.professorPré = Voluntários[i]["nome"]
-                Voluntários[i]["diasServidos"] += 1
-                Voluntários[i]["servindoNosDias"].append(diaDeDomingo.dia)
-                break;
-            if Voluntários[i] == Voluntários[-1]:
-                metaParaTodos += 1 
-                i = 0
-            else:
-                i += 1
-
-    # Kids
-    for diaDeDomingo in objetoDosDiasdeDomingo:
-        i = 0
-        metaParaTodos = 1
-        while i != len(Voluntários):
-            if (
-                "Fly" in Voluntários[i]["ministerios"]
-                and Voluntários[i]["funcoes"]["kids"]
-                and Voluntários[i]["diasServidos"] < metaParaTodos
-                and diaDeDomingo.dia not in Voluntários[i]["servindoNosDias"]
-                and Voluntários[i]["domingo"]
-            ):    
-                diaDeDomingo.professorKids = Voluntários[i]["nome"]
-                Voluntários[i]["diasServidos"] += 1
-                Voluntários[i]["servindoNosDias"].append(diaDeDomingo.dia)
-                break;
-            if Voluntários[i] == Voluntários[-1]:
-                metaParaTodos += 1 
-                i = 0
-            else:
-                i += 1
-
-    for diaDeDomingo in objetoDosDiasdeDomingo:
-        i = 0
-        metaParaTodos = 1
-        while i != len(Voluntários):
-            if (
-                "Fly" in Voluntários[i]["ministerios"]
-                and Voluntários[i]["funcoes"]["babys"]
-                and Voluntários[i]["diasServidos"] < metaParaTodos
-                and diaDeDomingo.dia not in Voluntários[i]["servindoNosDias"]
-                and Voluntários[i]["domingo"]
-            ):    
-                diaDeDomingo.professorBabys = Voluntários[i]["nome"]
-                Voluntários[i]["diasServidos"] += 1
-                Voluntários[i]["servindoNosDias"].append(diaDeDomingo.dia)
-                break;
-            if Voluntários[i] == Voluntários[-1]:
-                metaParaTodos += 1 
-                i = 0
-            else:
-                i += 1
+    if dia == "domingo":
+        for diaDeDomingo in objetoDosDiasdeDomingo:
+            random.shuffle(Voluntários)
+            i = 0
+            metaParaTodos = 1
+            while i != len(Voluntários):
+                if (
+                    ministerio in Voluntários[i]["ministerios"]
+                    and funcao in Voluntários[i]["funcoes"]
+                    and Voluntários[i]["diasServidos"] < metaParaTodos
+                    and diaDeDomingo.dia not in Voluntários[i]["servindoNosDias"]
+                    and Voluntários[i]["domingo"]
+                ):    
+                    if funcao in funcao_para_atributo:
+                        atributo = funcao_para_atributo[funcao]
+                        setattr(diaDeDomingo, atributo, Voluntários[i]["nome"])
+                        
+                    Voluntários[i]["diasServidos"] += 1
+                    Voluntários[i]["servindoNosDias"].append(diaDeDomingo.dia)
+                    break;
+                if Voluntários[i] == Voluntários[-1]:
+                    metaParaTodos += 1 
+                    i = 0
+                else:
+                    i += 1
 
 workbook = Workbook()
 
 border_style = Side(border_style="thin", color="000000")
 
 def planilhaDaMídia():
+
     fazerUmaEscala("Mídia", "foto", "quinta")
+    fazerUmaEscala("Mídia", "foto", "domingo")
+
     fazerUmaEscala("Mídia", "story", "quinta")
+    fazerUmaEscala("Mídia", "story", "domingo")
+
     fazerUmaEscala("Mídia", "mesa", "quinta")
+    fazerUmaEscala("Mídia", "mesa", "domingo")
+
+
     mídiaSheet = workbook.active
     mídiaSheet.title = "Mídia"
     if objetoDosDiasdeQuinta[0].dia < objetoDosDiasdeDomingo[0].dia:
@@ -533,7 +203,7 @@ def planilhaDaMídia():
 
         row += 1
         column -= 1
-        cell = mídiaSheet.cell(row=row, column=column, value=f"{dia.quemTiraFoto}")
+        cell = mídiaSheet.cell(row=row, column=column, value=f"{dia.Foto}")
         cell.alignment = Alignment(horizontal="center", vertical="center")
         cell.border = Border(left=border_style, right=border_style, top=border_style, bottom=border_style)
         column += 1
@@ -542,7 +212,7 @@ def planilhaDaMídia():
         cell.border = Border(left=border_style, right=border_style, top=border_style, bottom=border_style)
         row += 1
         column -= 1
-        cell = mídiaSheet.cell(row=row, column=column, value=f"{dia.quemFazStory}")
+        cell = mídiaSheet.cell(row=row, column=column, value=f"{dia.Story}")
         cell.alignment = Alignment(horizontal="center", vertical="center")
         cell.border = Border(left=border_style, right=border_style, top=border_style, bottom=border_style)
         column += 1
@@ -551,7 +221,7 @@ def planilhaDaMídia():
         cell.border = Border(left=border_style, right=border_style, top=border_style, bottom=border_style)
         row += 1
         column -= 1
-        cell = mídiaSheet.cell(row=row, column=column, value=f"{dia.quemFicaNaMesa}")
+        cell = mídiaSheet.cell(row=row, column=column, value=f"{dia.Mesa}")
         cell.alignment = Alignment(horizontal="center", vertical="center")
         cell.border = Border(left=border_style, right=border_style, top=border_style, bottom=border_style)
         column += 1
@@ -606,7 +276,7 @@ def planilhaDaMídia():
 
         row += 1
         column -= 1
-        cell = mídiaSheet.cell(row=row, column=column, value=f"{dia.quemTiraFoto}")
+        cell = mídiaSheet.cell(row=row, column=column, value=f"{dia.Foto}")
         cell.alignment = Alignment(horizontal="center", vertical="center")
         cell.border = Border(left=border_style, right=border_style, top=border_style, bottom=border_style)
         column += 1
@@ -615,7 +285,7 @@ def planilhaDaMídia():
         cell.border = Border(left=border_style, right=border_style, top=border_style, bottom=border_style)
         row += 1
         column -= 1
-        cell = mídiaSheet.cell(row=row, column=column, value=f"{dia.quemFazStory}")
+        cell = mídiaSheet.cell(row=row, column=column, value=f"{dia.Story}")
         cell.alignment = Alignment(horizontal="center", vertical="center")
         cell.border = Border(left=border_style, right=border_style, top=border_style, bottom=border_style)
         column += 1
@@ -624,7 +294,7 @@ def planilhaDaMídia():
         cell.border = Border(left=border_style, right=border_style, top=border_style, bottom=border_style)
         row += 1
         column -= 1
-        cell = mídiaSheet.cell(row=row, column=column, value=f"{dia.quemFicaNaMesa}")
+        cell = mídiaSheet.cell(row=row, column=column, value=f"{dia.Mesa}")
         cell.alignment = Alignment(horizontal="center", vertical="center")
         cell.border = Border(left=border_style, right=border_style, top=border_style, bottom=border_style)
         column += 1
@@ -675,7 +345,7 @@ def planilhaDaMídia():
 
         row += 1
         column -= 1
-        cell = mídiaSheet.cell(row=row, column=column, value=f"{dia.quemTiraFoto}")
+        cell = mídiaSheet.cell(row=row, column=column, value=f"{dia.Foto}")
         cell.alignment = Alignment(horizontal="center", vertical="center")
         cell.border = Border(left=border_style, right=border_style, top=border_style, bottom=border_style)
         column += 1
@@ -684,7 +354,7 @@ def planilhaDaMídia():
         cell.border = Border(left=border_style, right=border_style, top=border_style, bottom=border_style)
         row += 1
         column -= 1
-        cell = mídiaSheet.cell(row=row, column=column, value=f"{dia.quemFazStory}")
+        cell = mídiaSheet.cell(row=row, column=column, value=f"{dia.Story}")
         cell.alignment = Alignment(horizontal="center", vertical="center")
         cell.border = Border(left=border_style, right=border_style, top=border_style, bottom=border_style)
         column += 1
@@ -693,7 +363,7 @@ def planilhaDaMídia():
         cell.border = Border(left=border_style, right=border_style, top=border_style, bottom=border_style)
         row += 1
         column -= 1
-        cell = mídiaSheet.cell(row=row, column=column, value=f"{dia.quemFicaNaMesa}")
+        cell = mídiaSheet.cell(row=row, column=column, value=f"{dia.Mesa}")
         cell.alignment = Alignment(horizontal="center", vertical="center")
         cell.border = Border(left=border_style, right=border_style, top=border_style, bottom=border_style)
         column += 1
@@ -705,9 +375,15 @@ def planilhaDaMídia():
         column -= 1
 
 def planilhaDoFly():
-    fazerEscalaDoFly()
-    flySheet = workbook.active
-    flySheet.title = "Fly"
+    fazerUmaEscala("Fly", "pré", "quinta")
+    fazerUmaEscala("Fly", "kids", "quinta")
+    fazerUmaEscala("Fly", "babys", "quinta")
+
+    fazerUmaEscala("Fly", "pré", "domingo")
+    fazerUmaEscala("Fly", "kids", "domingo")
+    fazerUmaEscala("Fly", "babys", "domingo")
+
+    flySheet = workbook.create_sheet("Fly")
     if objetoDosDiasdeQuinta[0].dia < objetoDosDiasdeDomingo[0].dia:
         column = 1
     else:
@@ -738,43 +414,43 @@ def planilhaDoFly():
 
         row += 1
         flySheet.cell(row=row, column=column, value=f"Voluntários")
-        blackCell = mídiaSheet.cell(row=row, column=column)
+        blackCell = flySheet.cell(row=row, column=column)
         blackCell.fill = PatternFill("solid", fgColor = "00333333")
         blackCell.font = Font(color = "00FFFFFF")
         blackCell.alignment = Alignment(horizontal="center", vertical="center")
 
         column += 1
         flySheet.cell(row=row, column=column, value=f"Função")
-        blackCell = mídiaSheet.cell(row=row, column=column)
+        blackCell = flySheet.cell(row=row, column=column)
         blackCell.fill = PatternFill("solid", fgColor = "00333333")
         blackCell.font = Font(color = "00FFFFFF")
         blackCell.alignment = Alignment(horizontal="center", vertical="center")
 
         row += 1
         column -= 1
-        cell = flySheet.cell(row=row, column=column, value=f"{dia.quemTiraFoto}")
+        cell = flySheet.cell(row=row, column=column, value=f"{dia.professorPré}")
         cell.alignment = Alignment(horizontal="center", vertical="center")
         cell.border = Border(left=border_style, right=border_style, top=border_style, bottom=border_style)
         column += 1
-        cell = flySheet.cell(row=row, column=column, value=f"Foto")
+        cell = flySheet.cell(row=row, column=column, value=f"Pré")
         cell.alignment = Alignment(horizontal="center", vertical="center")
         cell.border = Border(left=border_style, right=border_style, top=border_style, bottom=border_style)
         row += 1
         column -= 1
-        cell = flySheet.cell(row=row, column=column, value=f"{dia.quemFazStory}")
+        cell = flySheet.cell(row=row, column=column, value=f"{dia.professorKids}")
         cell.alignment = Alignment(horizontal="center", vertical="center")
         cell.border = Border(left=border_style, right=border_style, top=border_style, bottom=border_style)
         column += 1
-        cell = flySheet.cell(row=row, column=column, value=f"Story")
+        cell = flySheet.cell(row=row, column=column, value=f"Kids")
         cell.alignment = Alignment(horizontal="center", vertical="center")
         cell.border = Border(left=border_style, right=border_style, top=border_style, bottom=border_style)
         row += 1
         column -= 1
-        cell = flySheet.cell(row=row, column=column, value=f"{dia.quemFicaNaMesa}")
+        cell = flySheet.cell(row=row, column=column, value=f"{dia.professorBabys}")
         cell.alignment = Alignment(horizontal="center", vertical="center")
         cell.border = Border(left=border_style, right=border_style, top=border_style, bottom=border_style)
         column += 1
-        cell = flySheet.cell(row=row, column=column, value=f"Mesa")
+        cell = flySheet.cell(row=row, column=column, value=f"Babys")
         cell.alignment = Alignment(horizontal="center", vertical="center")
         cell.border = Border(left=border_style, right=border_style, top=border_style, bottom=border_style)
 
@@ -825,29 +501,29 @@ def planilhaDoFly():
 
         row += 1
         column -= 1
-        cell = flySheet.cell(row=row, column=column, value=f"{dia.quemTiraFoto}")
+        cell = flySheet.cell(row=row, column=column, value=f"{dia.professorPré}")
         cell.alignment = Alignment(horizontal="center", vertical="center")
         cell.border = Border(left=border_style, right=border_style, top=border_style, bottom=border_style)
         column += 1
-        cell = flySheet.cell(row=row, column=column, value=f"Foto")
+        cell = flySheet.cell(row=row, column=column, value=f"Pré")
         cell.alignment = Alignment(horizontal="center", vertical="center")
         cell.border = Border(left=border_style, right=border_style, top=border_style, bottom=border_style)
         row += 1
         column -= 1
-        cell = flySheet.cell(row=row, column=column, value=f"{dia.quemFazStory}")
+        cell = flySheet.cell(row=row, column=column, value=f"{dia.professorKids}")
         cell.alignment = Alignment(horizontal="center", vertical="center")
         cell.border = Border(left=border_style, right=border_style, top=border_style, bottom=border_style)
         column += 1
-        cell = flySheet.cell(row=row, column=column, value=f"Story")
+        cell = flySheet.cell(row=row, column=column, value=f"Kids")
         cell.alignment = Alignment(horizontal="center", vertical="center")
         cell.border = Border(left=border_style, right=border_style, top=border_style, bottom=border_style)
         row += 1
         column -= 1
-        cell = flySheet.cell(row=row, column=column, value=f"{dia.quemFicaNaMesa}")
+        cell = flySheet.cell(row=row, column=column, value=f"{dia.professorBabys}")
         cell.alignment = Alignment(horizontal="center", vertical="center")
         cell.border = Border(left=border_style, right=border_style, top=border_style, bottom=border_style)
         column += 1
-        cell = flySheet.cell(row=row, column=column, value=f"Mesa")
+        cell = flySheet.cell(row=row, column=column, value=f"Babys")
         cell.alignment = Alignment(horizontal="center", vertical="center")
         cell.border = Border(left=border_style, right=border_style, top=border_style, bottom=border_style)
 
@@ -894,84 +570,427 @@ def planilhaDoFly():
 
         row += 1
         column -= 1
-        cell = flySheet.cell(row=row, column=column, value=f"{dia.quemTiraFoto}")
+        cell = flySheet.cell(row=row, column=column, value=f"{dia.professorPré}")
         cell.alignment = Alignment(horizontal="center", vertical="center")
         cell.border = Border(left=border_style, right=border_style, top=border_style, bottom=border_style)
         column += 1
-        cell = flySheet.cell(row=row, column=column, value=f"Foto")
+        cell = flySheet.cell(row=row, column=column, value=f"Pré")
         cell.alignment = Alignment(horizontal="center", vertical="center")
         cell.border = Border(left=border_style, right=border_style, top=border_style, bottom=border_style)
         row += 1
         column -= 1
-        cell = flySheet.cell(row=row, column=column, value=f"{dia.quemFazStory}")
+        cell = flySheet.cell(row=row, column=column, value=f"{dia.professorKids}")
         cell.alignment = Alignment(horizontal="center", vertical="center")
         cell.border = Border(left=border_style, right=border_style, top=border_style, bottom=border_style)
         column += 1
-        cell = flySheet.cell(row=row, column=column, value=f"Story")
+        cell = flySheet.cell(row=row, column=column, value=f"Kids")
         cell.alignment = Alignment(horizontal="center", vertical="center")
         cell.border = Border(left=border_style, right=border_style, top=border_style, bottom=border_style)
         row += 1
         column -= 1
-        cell = flySheet.cell(row=row, column=column, value=f"{dia.quemFicaNaMesa}")
+        cell = flySheet.cell(row=row, column=column, value=f"{dia.professorBabys}")
         cell.alignment = Alignment(horizontal="center", vertical="center")
         cell.border = Border(left=border_style, right=border_style, top=border_style, bottom=border_style)
         column += 1
-        cell = flySheet.cell(row=row, column=column, value=f"Mesa")
+        cell = flySheet.cell(row=row, column=column, value=f"Babys")
         cell.alignment = Alignment(horizontal="center", vertical="center")
         cell.border = Border(left=border_style, right=border_style, top=border_style, bottom=border_style)
 
         row += 2
         column -= 1
 
+def planilhasDosDias():
+    daysSheet = workbook.create_sheet("Dias")
 
-def fazerUmaEscala(ministerio, funcao, dia):
-    if dia == "quinta":
-        for diaDeQuinta in objetoDosDiasdeQuinta:
-            i = 0
-            metaParaTodos = 1
-            while i != len(Voluntários):
-                if (
-                    ministerio in Voluntários[i]["ministerios"]
-                    and Voluntários[i]["funcoes"][funcao]
-                    and Voluntários[i]["diasServidos"] < metaParaTodos
-                    and diaDeQuinta.dia not in Voluntários[i]["servindoNosDias"]
-                    and Voluntários[i]["quinta"]
-                ):    
-                    diaDeQuinta.quemTiraFoto = Voluntários[i]["nome"]
-                    Voluntários[i]["diasServidos"] += 1
-                    Voluntários[i]["servindoNosDias"].append(diaDeQuinta.dia)
-                    break;
-                if Voluntários[i] == Voluntários[-1]:
-                    metaParaTodos += 1 
-                    i = 0
-                else:
-                    i += 1
+    if (len(objetoDosDiasdeDomingo) > len(objetoDosDiasdeQuinta)):
+        maiorLargura = len(objetoDosDiasdeDomingo)
+    else:
+        maiorLargura = len(objetoDosDiasdeQuinta)
+    i = 0
+    column = 1
 
-    if dia == "domingo":
-        for diaDeDomingo in objetoDosDiasdeDomingo:
-            i = 0
-            metaParaTodos = 1
-            while i != len(Voluntários):
-                if (
-                    ministerio in Voluntários[i]["ministerios"]
-                    and Voluntários[i]["funcoes"][funcao]
-                    and Voluntários[i]["diasServidos"] < metaParaTodos
-                    and diaDeDomingo.dia not in Voluntários[i]["servindoNosDias"]
-                    and Voluntários[i]["domingo"]
-                ):    
-                    diaDeDomingo.quemTiraFoto = Voluntários[i]["nome"]
-                    Voluntários[i]["diasServidos"] += 1
-                    Voluntários[i]["servindoNosDias"].append(diaDeDomingo.dia)
-                    break;
-                if Voluntários[i] == Voluntários[-1]:
-                    metaParaTodos += 1 
-                    i = 0
-                else:
-                    i += 1
+    if objetoDosDiasdeQuinta[0].dia > objetoDosDiasdeDomingo[0].dia:
+
+        for i in range(maiorLargura):
+            try:
+                row = 1
+                # Mescla as células
+                daysSheet.merge_cells(start_row=row, start_column=column, end_row=row, end_column=column + 1)
+
+                # Define a célula no canto superior esquerdo da fusão
+                titleCell = daysSheet.cell(row=row, column=column)
+
+                # Define o valor da célula
+                titleCell.value = f"DOMINGO - {objetoDosDiasdeDomingo[i].dia}/{mes}"
+
+                # Define a cor de fundo
+                titleCell.fill = PatternFill("solid", fgColor="003366FF")
+
+                # Define a cor da fonte
+                titleCell.font = Font(color="00FFFFFF")
+
+                # Aplica o alinhamento
+                titleCell.alignment = Alignment(horizontal="center", vertical="center")
+
+                # Define a borda em todos os lados
+                titleCell.border = border_style
+
+                row += 1
+                daysSheet.cell(row=row, column=column, value=f"Voluntários")
+                blackCell = daysSheet.cell(row=row, column=column)
+                blackCell.fill = PatternFill("solid", fgColor = "00333333")
+                blackCell.font = Font(color = "00FFFFFF")
+                blackCell.alignment = Alignment(horizontal="center", vertical="center")
+
+                column += 1
+                daysSheet.cell(row=row, column=column, value=f"Função")
+                blackCell = daysSheet.cell(row=row, column=column)
+                blackCell.fill = PatternFill("solid", fgColor = "00333333")
+                blackCell.font = Font(color = "00FFFFFF")
+                blackCell.alignment = Alignment(horizontal="center", vertical="center")
+
+                for atributo, valor in vars(objetoDosDiasdeQuinta[i]).items():
+
+                    if (atributo == "Foto"):
+                        column -= 1
+                        row += 1
+
+                        daysSheet.merge_cells(start_row=row, start_column=column, end_row=row, end_column=column + 1)
+                        celulaMinisterio = daysSheet.cell(row=row, column=column)
+                        celulaMinisterio.value = f"MÍDIA"
+                        celulaMinisterio.fill = PatternFill("solid", fgColor="00969696")
+                        celulaMinisterio.font = Font(color="00FFFFFF")
+                        celulaMinisterio.alignment = Alignment(horizontal="center", vertical="center")
+                        
+                        column += 1
+
+                    if (atributo == "professorPré"):
+                        column -= 1
+                        row += 1
+                        daysSheet.merge_cells(start_row=row, start_column=column, end_row=row, end_column=column + 1)
+                        celulaMinisterio = daysSheet.cell(row=row, column=column)
+                        celulaMinisterio.value = f"FLY"
+                        celulaMinisterio.fill = PatternFill("solid", fgColor="00969696")
+                        celulaMinisterio.font = Font(color="00FFFFFF")
+                        celulaMinisterio.alignment = Alignment(horizontal="center", vertical="center")
+                        
+                        column += 1
+
+                    if (atributo == "Ministro"):
+                        column -= 1
+                        row += 1
+
+                        daysSheet.merge_cells(start_row=row, start_column=column, end_row=row, end_column=column + 1)
+                        celulaMinisterio = daysSheet.cell(row=row, column=column)
+                        celulaMinisterio.value = f"LOUVOR"
+                        celulaMinisterio.fill = PatternFill("solid", fgColor="00969696")
+                        celulaMinisterio.font = Font(color="00FFFFFF")
+                        celulaMinisterio.alignment = Alignment(horizontal="center", vertical="center")
+                        
+                        column += 1
+
+                    row += 1
+                    column -= 1
+                    cell = daysSheet.cell(row=row, column=column, value=f"{valor}")
+                    cell.alignment = Alignment(horizontal="center", vertical="center")
+                    cell.border = Border(left=border_style, right=border_style, top=border_style, bottom=border_style)
+                    column += 1
+                    cell = daysSheet.cell(row=row, column=column, value=f"{atributo}")
+                    cell.alignment = Alignment(horizontal="center", vertical="center")
+                    cell.border = Border(left=border_style, right=border_style, top=border_style, bottom=border_style)
+
+                column += 2
+
+                row = 1
+
+            except(IndexError):
+
+                print("\nChegou ao limite\n")
+
+            try:
+
+                # Mescla as células
+                daysSheet.merge_cells(start_row=row, start_column=column, end_row=row, end_column=column + 1)
+
+                # Define a célula no canto superior esquerdo da fusão
+                titleCell = daysSheet.cell(row=row, column=column)
+
+                # Define o valor da célula
+                titleCell.value = f"QUINTA - {objetoDosDiasdeQuinta[i].dia}/{mes}"
+
+                # Define a cor de fundo
+                titleCell.fill = PatternFill("solid", fgColor="00339966")
+
+                # Define a cor da fonte
+                titleCell.font = Font(color="00FFFFFF")
+
+                # Aplica o alinhamento
+                titleCell.alignment = Alignment(horizontal="center", vertical="center")
+
+                # Define a borda em todos os lados
+                titleCell.border = border_style
 
 
+                row += 1
+                daysSheet.cell(row=row, column=column, value=f"Voluntários")
+                blackCell = daysSheet.cell(row=row, column=column)
+                blackCell.fill = PatternFill("solid", fgColor = "00333333")
+                blackCell.font = Font(color = "00FFFFFF")
+                blackCell.alignment = Alignment(horizontal="center", vertical="center")
 
+                column += 1
+                daysSheet.cell(row=row, column=column, value=f"Função")
+                blackCell = daysSheet.cell(row=row, column=column)
+                blackCell.fill = PatternFill("solid", fgColor = "00333333")
+                blackCell.font = Font(color = "00FFFFFF")
+                blackCell.alignment = Alignment(horizontal="center", vertical="center")
 
+                for atributo, valor in vars(objetoDosDiasdeQuinta[i]).items():
+
+                    if (atributo == "Foto"):
+                        column -= 1
+                        row += 1
+
+                        daysSheet.merge_cells(start_row=row, start_column=column, end_row=row, end_column=column + 1)
+                        celulaMinisterio = daysSheet.cell(row=row, column=column)
+                        celulaMinisterio.value = f"MÍDIA"
+                        celulaMinisterio.fill = PatternFill("solid", fgColor="00969696")
+                        celulaMinisterio.font = Font(color="00FFFFFF")
+                        celulaMinisterio.alignment = Alignment(horizontal="center", vertical="center")
+                        
+                        column += 1
+
+                    if (atributo == "professorPré"):
+                        column -= 1
+                        row += 1
+                        daysSheet.merge_cells(start_row=row, start_column=column, end_row=row, end_column=column + 1)
+                        celulaMinisterio = daysSheet.cell(row=row, column=column)
+                        celulaMinisterio.value = f"FLY"
+                        celulaMinisterio.fill = PatternFill("solid", fgColor="00969696")
+                        celulaMinisterio.font = Font(color="00FFFFFF")
+                        celulaMinisterio.alignment = Alignment(horizontal="center", vertical="center")
+                        
+                        column += 1
+
+                    if (atributo == "Ministro"):
+                        column -= 1
+                        row += 1
+                        daysSheet.merge_cells(start_row=row, start_column=column, end_row=row, end_column=column + 1)
+                        celulaMinisterio = daysSheet.cell(row=row, column=column)
+                        celulaMinisterio.value = f"LOUVOR"
+                        celulaMinisterio.fill = PatternFill("solid", fgColor="00969696")
+                        celulaMinisterio.font = Font(color="00FFFFFF")
+                        celulaMinisterio.alignment = Alignment(horizontal="center", vertical="center")
+                        
+                        column += 1
+
+                    row += 1
+                    column -= 1
+                    cell = daysSheet.cell(row=row, column=column, value=f"{valor}")
+                    cell.alignment = Alignment(horizontal="center", vertical="center")
+                    cell.border = Border(left=border_style, right=border_style, top=border_style, bottom=border_style)
+                    column += 1
+                    cell = daysSheet.cell(row=row, column=column, value=f"{atributo}")
+                    cell.alignment = Alignment(horizontal="center", vertical="center")
+                    cell.border = Border(left=border_style, right=border_style, top=border_style, bottom=border_style)
+
+                column += 2
+
+                row = 1
+            except(IndexError):
+                print("\nChegou ao limite\n") 
+
+    else:
+        for i in range(maiorLargura):
+            try:    
+                row = 1
+                # Mescla as células
+                daysSheet.merge_cells(start_row=row, start_column=column, end_row=row, end_column=column + 1)
+
+                # Define a célula no canto superior esquerdo da fusão
+                titleCell = daysSheet.cell(row=row, column=column)
+
+                # Define o valor da célula
+                titleCell.value = f"QUINTA - {objetoDosDiasdeQuinta[i].dia}/{mes}"
+
+                # Define a cor de fundo
+                titleCell.fill = PatternFill("solid", fgColor="00339966")
+
+                # Define a cor da fonte
+                titleCell.font = Font(color="00FFFFFF")
+
+                # Aplica o alinhamento
+                titleCell.alignment = Alignment(horizontal="center", vertical="center")
+
+                # Define a borda em todos os lados
+                titleCell.border = border_style
+
+                        
+                row += 1
+                daysSheet.cell(row=row, column=column, value=f"Voluntários")
+                blackCell = daysSheet.cell(row=row, column=column)
+                blackCell.fill = PatternFill("solid", fgColor = "00333333")
+                blackCell.font = Font(color = "00FFFFFF")
+                blackCell.alignment = Alignment(horizontal="center", vertical="center")
+
+                column += 1
+                daysSheet.cell(row=row, column=column, value=f"Função")
+                blackCell = daysSheet.cell(row=row, column=column)
+                blackCell.fill = PatternFill("solid", fgColor = "00333333")
+                blackCell.font = Font(color = "00FFFFFF")
+                blackCell.alignment = Alignment(horizontal="center", vertical="center")
+
+                for atributo, valor in vars(objetoDosDiasdeQuinta[i]).items():
+
+                    if (atributo == "Foto"):
+                        column -= 1
+                        row += 1
+                        daysSheet.merge_cells(start_row=row, start_column=column, end_row=row, end_column=column + 1)
+                        celulaMinisterio = daysSheet.cell(row=row, column=column)
+                        celulaMinisterio.value = f"MÍDIA"
+                        celulaMinisterio.fill = PatternFill("solid", fgColor="00969696")
+                        celulaMinisterio.font = Font(color="00FFFFFF")
+                        celulaMinisterio.alignment = Alignment(horizontal="center", vertical="center")
+                        
+                        column += 1
+
+                    if (atributo == "professorPré"):
+                        column -= 1
+                        row += 1
+                        daysSheet.merge_cells(start_row=row, start_column=column, end_row=row, end_column=column + 1)
+                        celulaMinisterio = daysSheet.cell(row=row, column=column)
+                        celulaMinisterio.value = f"FLY"
+                        celulaMinisterio.fill = PatternFill("solid", fgColor="00969696")
+                        celulaMinisterio.font = Font(color="00FFFFFF")
+                        celulaMinisterio.alignment = Alignment(horizontal="center", vertical="center")
+                        
+                        column += 1
+
+                    if (atributo == "Ministro"):
+                        column -= 1
+                        row += 1
+                        daysSheet.merge_cells(start_row=row, start_column=column, end_row=row, end_column=column + 1)
+                        celulaMinisterio = daysSheet.cell(row=row, column=column)
+                        celulaMinisterio.value = f"LOUVOR"
+                        celulaMinisterio.fill = PatternFill("solid", fgColor="00969696")
+                        celulaMinisterio.font = Font(color="00FFFFFF")
+                        celulaMinisterio.alignment = Alignment(horizontal="center", vertical="center")
+                        
+                        column += 1
+
+                    row += 1
+                    column -= 1
+                    cell = daysSheet.cell(row=row, column=column, value=f"{valor}")
+                    cell.alignment = Alignment(horizontal="center", vertical="center")
+                    cell.border = Border(left=border_style, right=border_style, top=border_style, bottom=border_style)
+                    column += 1
+                    cell = daysSheet.cell(row=row, column=column, value=f"{atributo}")
+                    cell.alignment = Alignment(horizontal="center", vertical="center")
+                    cell.border = Border(left=border_style, right=border_style, top=border_style, bottom=border_style)
+
+                column += 2
+
+                row = 1
+
+            except(IndexError):
+                print("\nChegou ao limite\n")
+        
+            try:
+                # Mescla as células
+                daysSheet.merge_cells(start_row=row, start_column=column, end_row=row, end_column=column + 1)
+
+                # Define a célula no canto superior esquerdo da fusão
+                titleCell = daysSheet.cell(row=row, column=column)
+
+                # Define o valor da célula
+                titleCell.value = f"DOMINGO - {objetoDosDiasdeDomingo[i].dia}/{mes}"
+
+                # Define a cor de fundo
+                titleCell.fill = PatternFill("solid", fgColor="003366FF")
+
+                # Define a cor da fonte
+                titleCell.font = Font(color="00FFFFFF")
+
+                # Aplica o alinhamento
+                titleCell.alignment = Alignment(horizontal="center", vertical="center")
+
+                # Define a borda em todos os lados
+                titleCell.border = border_style
+
+                row += 1
+                daysSheet.cell(row=row, column=column, value=f"Voluntários")
+                blackCell = daysSheet.cell(row=row, column=column)
+                blackCell.fill = PatternFill("solid", fgColor = "00333333")
+                blackCell.font = Font(color = "00FFFFFF")
+                blackCell.alignment = Alignment(horizontal="center", vertical="center")
+
+                column += 1
+                daysSheet.cell(row=row, column=column, value=f"Função")
+                blackCell = daysSheet.cell(row=row, column=column)
+                blackCell.fill = PatternFill("solid", fgColor = "00333333")
+                blackCell.font = Font(color = "00FFFFFF")
+                blackCell.alignment = Alignment(horizontal="center", vertical="center")
+
+                for atributo, valor in vars(objetoDosDiasdeQuinta[i]).items():
+
+                    if (atributo == "Foto"):
+                        column -= 1
+                        row += 1
+
+                        daysSheet.merge_cells(start_row=row, start_column=column, end_row=row, end_column=column + 1)
+                        celulaMinisterio = daysSheet.cell(row=row, column=column)
+                        celulaMinisterio.value = f"MÍDIA"
+                        celulaMinisterio.fill = PatternFill("solid", fgColor="00969696")
+                        celulaMinisterio.font = Font(color="00FFFFFF")
+                        celulaMinisterio.alignment = Alignment(horizontal="center", vertical="center")
+                        
+                        column += 1
+
+                    if (atributo == "professorPré"):
+                        column -= 1
+                        row += 1
+
+                        daysSheet.merge_cells(start_row=row, start_column=column, end_row=row, end_column=column + 1)
+                        celulaMinisterio = daysSheet.cell(row=row, column=column)
+                        celulaMinisterio.value = f"FLY"
+                        celulaMinisterio.fill = PatternFill("solid", fgColor="00969696")
+                        celulaMinisterio.font = Font(color="00FFFFFF")
+                        celulaMinisterio.alignment = Alignment(horizontal="center", vertical="center")
+                        
+                        column += 1
+
+                    if (atributo == "Ministro"):
+                        column -= 1
+                        row += 1
+
+                        daysSheet.merge_cells(start_row=row, start_column=column, end_row=row, end_column=column + 1)
+                        celulaMinisterio = daysSheet.cell(row=row, column=column)
+                        celulaMinisterio.value = f"LOUVOR"
+                        celulaMinisterio.fill = PatternFill("solid", fgColor="00969696")
+                        celulaMinisterio.font = Font(color="00FFFFFF")
+                        celulaMinisterio.alignment = Alignment(horizontal="center", vertical="center")
+                        
+                        column += 1
+
+                    row += 1
+                    column -= 1
+                    cell = daysSheet.cell(row=row, column=column, value=f"{valor}")
+                    cell.alignment = Alignment(horizontal="center", vertical="center")
+                    cell.border = Border(left=border_style, right=border_style, top=border_style, bottom=border_style)
+                    column += 1
+                    cell = daysSheet.cell(row=row, column=column, value=f"{atributo}")
+                    cell.alignment = Alignment(horizontal="center", vertical="center")
+                    cell.border = Border(left=border_style, right=border_style, top=border_style, bottom=border_style)
+
+                column += 2
+
+                row = 1
+            except(IndexError):
+                print("\nChegou ao limite\n")
+
+planilhaDoFly()
 planilhaDaMídia()
+planilhasDosDias()
+
 
 workbook.save(f"Escala.xlsx")

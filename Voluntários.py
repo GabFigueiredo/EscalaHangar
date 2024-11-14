@@ -8,13 +8,10 @@ Voluntários = [
         "domingo": True,
         "funcoes": {
             # Mídia
-            "foto": False,
-            "story": False,
             "mesa": True,
             # Fly
-            "pré": False,
-            "Kids": True,
-            "Babys": True,
+            "kids": True,
+            "babys": True,
         },
         "ministerios": ["Mídia", "Fly"],
         "servindoNosDias": [],
@@ -27,7 +24,6 @@ Voluntários = [
         "funcoes": {
             # Mídia
             "foto": True,
-            "story": False,
             "mesa": True
         },
         "ministerios": ["Mídia"],
@@ -41,7 +37,6 @@ Voluntários = [
         "funcoes": {
             # Mídia
             "foto": True,
-            "story": False,
             "mesa": True
         },
         "ministerios": ["Mídia"],
@@ -56,7 +51,6 @@ Voluntários = [
             # Mídia
             "foto": True,
             "story": True,
-            "mesa": False
         },
         "ministerios": ["Mídia"],
         "servindoNosDias": [],
@@ -68,8 +62,6 @@ Voluntários = [
         "domingo": True,
         "funcoes": {
             # Mídia
-            "foto": False,
-            "story": False,
             "mesa": True
         },
         "ministerios": ["Mídia", "Fly"],
@@ -82,8 +74,6 @@ Voluntários = [
         "domingo": True,
         "funcoes": {
             # Mídia
-            "foto": False,
-            "story": False,
             "mesa": True
         },
         "ministerios": ["Mídia", "Fly"],
@@ -98,7 +88,6 @@ Voluntários = [
             # Mídia
             "foto": True,
             "story": True,
-            "mesa": False
         },
         "ministerios": ["Mídia", "Fly"],
         "servindoNosDias": [],
@@ -112,10 +101,171 @@ Voluntários = [
             # Mídia
             "foto": True,
             "story": True,
-            "mesa": False
         },
         "ministerios": ["Mídia", "Fly"],
         "servindoNosDias": [],
         "diasServidos": 0
+    },
+
+        {
+        "nome": "Maria",
+        "quinta": True,
+        "domingo": True,
+        "funcoes": {
+            "foto": True,
+            "story": True,
+            "kids": True,
+        },
+        "ministerios": ["Mídia", "Fly"],
+        "servindoNosDias": ["quinta", "domingo"],
+        "diasServidos": 2
+    },
+    {
+        "nome": "Lucas",
+        "quinta": False,
+        "domingo": True,
+        "funcoes": {
+            "mesa": True,
+            "pré": True,
+            "kids": True,
+        },
+        "ministerios": ["Fly", "Mídia"],
+        "servindoNosDias": ["domingo"],
+        "diasServidos": 1
+    },
+    {
+        "nome": "Ana",
+        "quinta": True,
+        "domingo": False,
+        "funcoes": {
+            "foto": True,
+            "story": True,
+            "babys": True
+        },
+        "ministerios": ["Mídia", "Fly"],
+        "servindoNosDias": ["quinta"],
+        "diasServidos": 1
+    },
+    {
+        "nome": "Carlos",
+        "quinta": False,
+        "domingo": True,
+        "funcoes": {
+            "story": True,
+            "mesa": True,
+            "pré": True,
+        },
+        "ministerios": ["Mídia", "Fly"],
+        "servindoNosDias": ["domingo"],
+        "diasServidos": 1
+    },
+    {
+        "nome": "Beatriz",
+        "quinta": True,
+        "domingo": True,
+        "funcoes": {
+            "mesa": True,
+            "pré": True,
+            "kids": True,
+        },
+        "ministerios": ["Mídia", "Fly"],
+        "servindoNosDias": ["quinta", "domingo"],
+        "diasServidos": 2
+    },
+    {
+        "nome": "Felipe",
+        "quinta": True,
+        "domingo": False,
+        "funcoes": {
+            "foto": True,
+            "mesa": True,
+            "kids": True,
+            "babys": True
+        },
+        "ministerios": ["Fly", "Mídia"],
+        "servindoNosDias": [],
+        "diasServidos": 0
+    },
+    {
+        "nome": "Clara",
+        "quinta": True,
+        "domingo": False,
+        "funcoes": {
+            "story": True,
+            "pré": True,
+            "kids": True,
+        },
+        "ministerios": ["Mídia", "Fly"],
+        "servindoNosDias": ["quinta"],
+        "diasServidos": 1
+    },
+    {
+        "nome": "Rafael",
+        "quinta": True,
+        "domingo": True,
+        "funcoes": {
+            "foto": True,
+            "story": True,
+            "babys": True
+        },
+        "ministerios": ["Mídia", "Fly"],
+        "servindoNosDias": ["quinta", "domingo"],
+        "diasServidos": 2
+    },
+    {
+        "nome": "Isabela",
+        "quinta": True,
+        "domingo": True,
+        "funcoes": {
+            "mesa": True,
+            "pré": True,
+            "kids": True,
+        },
+        "ministerios": ["Mídia", "Fly"],
+        "servindoNosDias": ["quinta", "domingo"],
+        "diasServidos": 2
+    },
+    {
+        "nome": "Daniel",
+        "quinta": False,
+        "domingo": True,
+        "funcoes": {
+            "story": True,
+
+            "pré": True,
+            "kids": True,
+            "babys": True
+        },
+        "ministerios": ["Mídia", "Fly"],
+        "servindoNosDias": ["domingo"],
+        "diasServidos": 1
+    },
+    {
+        "nome": "Laura",
+        "quinta": False,
+        "domingo": True,
+        "funcoes": {
+            "foto": True,
+            "mesa": True,
+            "babys": True
+        },
+        "ministerios": ["Fly", "Mídia"],
+        "servindoNosDias": [],
+        "diasServidos": 0
+    },
+    {
+        "nome": "Pedro",
+        "quinta": True,
+        "domingo": True,
+        "funcoes": {
+            "foto": True,
+            "story": True,
+            "pré": True,
+            "kids": True,
+        },
+        "ministerios": ["Mídia", "Fly"] ,
+        "servindoNosDias": ["quinta", "domingo"],
+        "diasServidos": 2
     }
+
 ]
