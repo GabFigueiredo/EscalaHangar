@@ -16,8 +16,9 @@ from Voluntários import mes, ano
 Voluntários = copy.deepcopy(Voluntários)
 
 class diaServentia:
-    def __init__ (self, dia):
+    def __init__ (self, dia, tipo):
         self.dia = dia
+        self.tipo = tipo
         # Mídia
         self.Foto = None
         self.Story = None
@@ -67,15 +68,15 @@ objetoDosDiasdeDomingo = []
 objetoDosDiasdeSabado = []
 
 for dia in diasDeQuinta:
-    temp = diaServentia(dia)
+    temp = diaServentia(dia, "quinta")
     objetoDosDiasdeQuinta.append(temp)
 
 for dia in diasDeDomingo:
-    temp = diaServentia(dia)
+    temp = diaServentia(dia, "domingo")
     objetoDosDiasdeDomingo.append(temp)
 
 for dia in diasDeSabado:
-    temp = diaServentia(dia)
+    temp = diaServentia(dia, "sabado")
     objetoDosDiasdeSabado.append(temp)
 
 funcao_para_atributo = {
@@ -88,12 +89,12 @@ funcao_para_atributo = {
     }
 
 def fazerUmaEscala(ministerio, funcao, dia):
-
+    
+    metaParaTodos = 1
     if dia == "quinta":
         for diaDeQuinta in objetoDosDiasdeQuinta:
             random.shuffle(Voluntários)
             i = 0
-            metaParaTodos = 1
             while i != len(Voluntários):  
                 if (
                     ministerio in Voluntários[i]["ministerios"]
@@ -119,7 +120,6 @@ def fazerUmaEscala(ministerio, funcao, dia):
         for diaDeDomingo in objetoDosDiasdeDomingo:
             random.shuffle(Voluntários)
             i = 0
-            metaParaTodos = 1
             while i != len(Voluntários):
                 if (
                     ministerio in Voluntários[i]["ministerios"]
@@ -141,238 +141,164 @@ def fazerUmaEscala(ministerio, funcao, dia):
                 else:
                     i += 1
 
+diasJuntos = objetoDosDiasdeQuinta + objetoDosDiasdeDomingo  
+
+def fazerEscalaPorDia():
+    diasJuntosSortidos = random.shuffle(diasJuntos)
+    metaParaTodos = 1
+    for dia in diasJuntosSortidos:
+        for atributo, valor in vars(dia).items():
+            
+
 workbook = Workbook()
 
 border_style = Side(border_style="thin", color="000000")
 
+def fazerUmaTabela(listaDosDias, folha, row, column):
+    margem = 0
+    for dia in listaDosDias:
+        # Título do dia
+        folha.merge_cells(start_row=row, start_column=column, end_row=row, end_column=column + 1)
+        titleCell = folha.cell(row=row, column=column)
+        titleCell.value = f"{dia.tipo.upper()} - {dia.dia}/{mes}"
+        if dia.tipo == "quinta":
+            titleCell.fill = PatternFill("solid", fgColor="00339966")
+        if dia.tipo == "domingo":
+            titleCell.fill = PatternFill("solid", fgColor="003366FF")
+        if dia.tipo == "sabado":
+            titleCell.fill = PatternFill("solid", fgColor="00003366")
+        titleCell.font = Font(color="00FFFFFF")
+        titleCell.alignment = Alignment(horizontal="center", vertical="center")
+        titleCell.border = border_style
+
+        # Título de voluntários 
+        row += 1
+        folha.cell(row=row, column=column, value=f"Voluntários")
+        blackCell = folha.cell(row=row, column=column)
+        blackCell.fill = PatternFill("solid", fgColor = "00333333")
+        blackCell.font = Font(color = "00FFFFFF")
+        blackCell.alignment = Alignment(horizontal="center", vertical="center")
+
+        # Título de Função 
+        column += 1
+        folha.cell(row=row, column=column, value=f"Função")
+        blackCell = folha.cell(row=row, column=column)
+        blackCell.fill = PatternFill("solid", fgColor = "00333333")
+        blackCell.font = Font(color = "00FFFFFF")
+        blackCell.alignment = Alignment(horizontal="center", vertical="center")
+
+        # Cargos e pessoas
+        column -= 1
+        margem = 0
+        for atributo, valor in vars(dia).items():
+            if margem < 2:
+                margem += 1
+                continue
+
+            if folha.title == "Mídia" and margem not in range(2, 5):
+                break
+
+            if folha.title == "Fly" and margem not in range(5, 9):
+                if margem < 6:
+                    margem += 1
+                    continue
+                else: break
+
+            if folha.title == "Louvor" and margem not in range(9, 16):
+                if margem < 10:
+                    margem += 1
+                    continue
+                else: break    
+
+            row += 1
+            # Fazer nome do cargo
+            cell = folha.cell(row=row, column=column, value=f"{atributo}")
+            cell.alignment = Alignment(horizontal="center", vertical="center")
+            cell.border = Border(left=border_style, right=border_style, top=border_style, bottom=border_style)
+
+            column += 1
+            # Fazer pessoa do cargo
+            if isinstance(atributo, list):
+                cell = folha.cell(row=row, column=column, value=f"{', '.join(valor)}")
+                cell.alignment = Alignment(horizontal="center", vertical="center")
+                cell.border = Border(left=border_style, right=border_style, top=border_style, bottom=border_style)
+            else:    
+                cell = folha.cell(row=row, column=column, value=f"{valor}")
+                cell.alignment = Alignment(horizontal="center", vertical="center")
+                cell.border = Border(left=border_style, right=border_style, top=border_style, bottom=border_style)
+
+            if atributo == "Violão":
+                column -= 1
+                folha.merge_cells(start_row=row, start_column=column, end_row=row, end_column=column + 1)
+
+                cell = folha.cell(row=row, column=column)
+                cell.value = f"Músicas"
+                cell.alignment = Alignment(horizontal="center", vertical="center")
+                cell.fill = PatternFill("solid", fgColor = "00333333")
+                cell.font = Font(color = "00FFFFFF")
+                cell.border = Border(left=border_style, right=border_style, top=border_style, bottom=border_style)
+
+                row += 1
+
+                cell = folha.cell(row=row, column=column, value=f"Mesa")
+                cell.alignment = Alignment(horizontal="center", vertical="center")
+                cell.border = Border(left=border_style, right=border_style, top=border_style, bottom=border_style)
+
+                column += 1
+
+                cell = folha.cell(row=row, column=column, value=f"{dia.Mesa}")
+                cell.alignment = Alignment(horizontal="center", vertical="center")
+                cell.border = Border(left=border_style, right=border_style, top=border_style, bottom=border_style)
+
+                
+                for i in range(5):
+                    column -= 1
+                    row += 1
+
+                    cell = folha.cell(row=row, column=column, value="Nome")
+                    cell.alignment = Alignment(horizontal="center", vertical="center")
+                    cell.border = Border(left=border_style, right=border_style, top=border_style, bottom=border_style)
+
+                    column += 1
+
+                    cell = folha.cell(row=row, column=column)
+                    cell.alignment = Alignment(horizontal="center", vertical="center")
+                    cell.border = Border(left=border_style, right=border_style, top=border_style, bottom=border_style)
+
+            margem += 1
+            column -= 1
+        row += 2
+
 def planilhaDaMídia():
 
-    fazerUmaEscala("Mídia", "foto", "quinta")
-    fazerUmaEscala("Mídia", "foto", "domingo")
-
-    fazerUmaEscala("Mídia", "story", "quinta")
     fazerUmaEscala("Mídia", "story", "domingo")
-
     fazerUmaEscala("Mídia", "mesa", "quinta")
+    fazerUmaEscala("Mídia", "foto", "domingo")
+    fazerUmaEscala("Mídia", "story", "quinta")
     fazerUmaEscala("Mídia", "mesa", "domingo")
-
+    fazerUmaEscala("Mídia", "foto", "quinta")
 
     mídiaSheet = workbook.active
     mídiaSheet.title = "Mídia"
-    if objetoDosDiasdeQuinta[0].dia < objetoDosDiasdeDomingo[0].dia:
+    if objetoDosDiasdeDomingo[0].dia > objetoDosDiasdeQuinta[0].dia:
+
+        row = 1
         column = 1
-    else:
+        fazerUmaTabela(objetoDosDiasdeQuinta, mídiaSheet, row, column)
+
+        row = 1
         column = 4
-
-    row = 1
-    for dia in objetoDosDiasdeQuinta:
-        # Mescla as células
-        mídiaSheet.merge_cells(start_row=row, start_column=column, end_row=row, end_column=column + 1)
-
-        # Define a célula no canto superior esquerdo da fusão
-        titleCell = mídiaSheet.cell(row=row, column=column)
-
-        # Define o valor da célula
-        titleCell.value = f"QUINTA - {dia.dia}/{mes}"
-
-        # Define a cor de fundo
-        titleCell.fill = PatternFill("solid", fgColor="00339966")
-
-        # Define a cor da fonte
-        titleCell.font = Font(color="00FFFFFF")
-
-        # Aplica o alinhamento
-        titleCell.alignment = Alignment(horizontal="center", vertical="center")
-
-        # Define a borda em todos os lados
-        titleCell.border = border_style
-
-        row += 1
-        mídiaSheet.cell(row=row, column=column, value=f"Voluntários")
-        blackCell = mídiaSheet.cell(row=row, column=column)
-        blackCell.fill = PatternFill("solid", fgColor = "00333333")
-        blackCell.font = Font(color = "00FFFFFF")
-        blackCell.alignment = Alignment(horizontal="center", vertical="center")
-
-        column += 1
-        mídiaSheet.cell(row=row, column=column, value=f"Função")
-        blackCell = mídiaSheet.cell(row=row, column=column)
-        blackCell.fill = PatternFill("solid", fgColor = "00333333")
-        blackCell.font = Font(color = "00FFFFFF")
-        blackCell.alignment = Alignment(horizontal="center", vertical="center")
-
-        row += 1
-        column -= 1
-        cell = mídiaSheet.cell(row=row, column=column, value=f"{dia.Foto}")
-        cell.alignment = Alignment(horizontal="center", vertical="center")
-        cell.border = Border(left=border_style, right=border_style, top=border_style, bottom=border_style)
-        column += 1
-        cell = mídiaSheet.cell(row=row, column=column, value=f"Foto")
-        cell.alignment = Alignment(horizontal="center", vertical="center")
-        cell.border = Border(left=border_style, right=border_style, top=border_style, bottom=border_style)
-        row += 1
-        column -= 1
-        cell = mídiaSheet.cell(row=row, column=column, value=f"{dia.Story}")
-        cell.alignment = Alignment(horizontal="center", vertical="center")
-        cell.border = Border(left=border_style, right=border_style, top=border_style, bottom=border_style)
-        column += 1
-        cell = mídiaSheet.cell(row=row, column=column, value=f"Story")
-        cell.alignment = Alignment(horizontal="center", vertical="center")
-        cell.border = Border(left=border_style, right=border_style, top=border_style, bottom=border_style)
-        row += 1
-        column -= 1
-        cell = mídiaSheet.cell(row=row, column=column, value=f"{dia.Mesa}")
-        cell.alignment = Alignment(horizontal="center", vertical="center")
-        cell.border = Border(left=border_style, right=border_style, top=border_style, bottom=border_style)
-        column += 1
-        cell = mídiaSheet.cell(row=row, column=column, value=f"Mesa")
-        cell.alignment = Alignment(horizontal="center", vertical="center")
-        cell.border = Border(left=border_style, right=border_style, top=border_style, bottom=border_style)
-
-        row += 2
-        column -= 1
+        fazerUmaTabela(objetoDosDiasdeDomingo, mídiaSheet, row, column)
 
     if objetoDosDiasdeQuinta[0].dia > objetoDosDiasdeDomingo[0].dia:
+
+        row = 1
         column = 1
-    else:
+        fazerUmaTabela(objetoDosDiasdeDomingo, mídiaSheet, row, column)
+        
+        row = 1
         column = 4
-
-    row = 1
-    for dia in objetoDosDiasdeDomingo:
-        # Mescla as células
-        mídiaSheet.merge_cells(start_row=row, start_column=column, end_row=row, end_column=column + 1)
-
-        # Define a célula no canto superior esquerdo da fusão
-        titleCell = mídiaSheet.cell(row=row, column=column)
-
-        # Define o valor da célula
-        titleCell.value = f"DOMINGO - {dia.dia}/{mes}"
-
-        # Define a cor de fundo
-        titleCell.fill = PatternFill("solid", fgColor="003366FF")
-
-        # Define a cor da fonte
-        titleCell.font = Font(color="00FFFFFF")
-
-        # Aplica o alinhamento
-        titleCell.alignment = Alignment(horizontal="center", vertical="center")
-
-        # Define a borda em todos os lados
-        titleCell.border = border_style
-
-        row += 1
-        mídiaSheet.cell(row=row, column=column, value=f"Voluntários")
-        blackCell = mídiaSheet.cell(row=row, column=column)
-        blackCell.fill = PatternFill("solid", fgColor = "00333333")
-        blackCell.font = Font(color = "00FFFFFF")
-        blackCell.alignment = Alignment(horizontal="center", vertical="center")
-
-        column += 1
-        mídiaSheet.cell(row=row, column=column, value=f"Função")
-        blackCell = mídiaSheet.cell(row=row, column=column)
-        blackCell.fill = PatternFill("solid", fgColor = "00333333")
-        blackCell.font = Font(color = "00FFFFFF")
-        blackCell.alignment = Alignment(horizontal="center", vertical="center")
-
-        row += 1
-        column -= 1
-        cell = mídiaSheet.cell(row=row, column=column, value=f"{dia.Foto}")
-        cell.alignment = Alignment(horizontal="center", vertical="center")
-        cell.border = Border(left=border_style, right=border_style, top=border_style, bottom=border_style)
-        column += 1
-        cell = mídiaSheet.cell(row=row, column=column, value=f"Foto")
-        cell.alignment = Alignment(horizontal="center", vertical="center")
-        cell.border = Border(left=border_style, right=border_style, top=border_style, bottom=border_style)
-        row += 1
-        column -= 1
-        cell = mídiaSheet.cell(row=row, column=column, value=f"{dia.Story}")
-        cell.alignment = Alignment(horizontal="center", vertical="center")
-        cell.border = Border(left=border_style, right=border_style, top=border_style, bottom=border_style)
-        column += 1
-        cell = mídiaSheet.cell(row=row, column=column, value=f"Story")
-        cell.alignment = Alignment(horizontal="center", vertical="center")
-        cell.border = Border(left=border_style, right=border_style, top=border_style, bottom=border_style)
-        row += 1
-        column -= 1
-        cell = mídiaSheet.cell(row=row, column=column, value=f"{dia.Mesa}")
-        cell.alignment = Alignment(horizontal="center", vertical="center")
-        cell.border = Border(left=border_style, right=border_style, top=border_style, bottom=border_style)
-        column += 1
-        cell = mídiaSheet.cell(row=row, column=column, value=f"Mesa")
-        cell.alignment = Alignment(horizontal="center", vertical="center")
-        cell.border = Border(left=border_style, right=border_style, top=border_style, bottom=border_style)
-
-        row += 2
-        column -= 1
-
-    row = 1
-    column = 7
-    for dia in objetoDosDiasdeSabado:
-        # Mescla as células
-        mídiaSheet.merge_cells(start_row=row, start_column=column, end_row=row, end_column=column + 1)
-
-        # Define a célula no canto superior esquerdo da fusão
-        titleCell = mídiaSheet.cell(row=row, column=column)
-
-        # Define o valor da célula
-        titleCell.value = f"SÁBADO - {dia.dia}/{mes}"
-
-        # Define a cor de fundo
-        titleCell.fill = PatternFill("solid", fgColor="00003366")
-
-        # Define a cor da fonte
-        titleCell.font = Font(color="00FFFFFF")
-
-        # Aplica o alinhamento
-        titleCell.alignment = Alignment(horizontal="center", vertical="center")
-
-        # Define a borda em todos os lados
-        titleCell.border = border_style
-
-        row += 1
-        mídiaSheet.cell(row=row, column=column, value=f"Voluntários")
-        blackCell = mídiaSheet.cell(row=row, column=column)
-        blackCell.fill = PatternFill("solid", fgColor = "00333333")
-        blackCell.font = Font(color = "00FFFFFF")
-        blackCell.alignment = Alignment(horizontal="center", vertical="center")
-
-        column += 1
-        mídiaSheet.cell(row=row, column=column, value=f"Função")
-        blackCell = mídiaSheet.cell(row=row, column=column)
-        blackCell.fill = PatternFill("solid", fgColor = "00333333")
-        blackCell.font = Font(color = "00FFFFFF")
-        blackCell.alignment = Alignment(horizontal="center", vertical="center")
-
-        row += 1
-        column -= 1
-        cell = mídiaSheet.cell(row=row, column=column, value=f"{dia.Foto}")
-        cell.alignment = Alignment(horizontal="center", vertical="center")
-        cell.border = Border(left=border_style, right=border_style, top=border_style, bottom=border_style)
-        column += 1
-        cell = mídiaSheet.cell(row=row, column=column, value=f"Foto")
-        cell.alignment = Alignment(horizontal="center", vertical="center")
-        cell.border = Border(left=border_style, right=border_style, top=border_style, bottom=border_style)
-        row += 1
-        column -= 1
-        cell = mídiaSheet.cell(row=row, column=column, value=f"{dia.Story}")
-        cell.alignment = Alignment(horizontal="center", vertical="center")
-        cell.border = Border(left=border_style, right=border_style, top=border_style, bottom=border_style)
-        column += 1
-        cell = mídiaSheet.cell(row=row, column=column, value=f"Story")
-        cell.alignment = Alignment(horizontal="center", vertical="center")
-        cell.border = Border(left=border_style, right=border_style, top=border_style, bottom=border_style)
-        row += 1
-        column -= 1
-        cell = mídiaSheet.cell(row=row, column=column, value=f"{dia.Mesa}")
-        cell.alignment = Alignment(horizontal="center", vertical="center")
-        cell.border = Border(left=border_style, right=border_style, top=border_style, bottom=border_style)
-        column += 1
-        cell = mídiaSheet.cell(row=row, column=column, value=f"Mesa")
-        cell.alignment = Alignment(horizontal="center", vertical="center")
-        cell.border = Border(left=border_style, right=border_style, top=border_style, bottom=border_style)
-
-        row += 2
-        column -= 1
+        fazerUmaTabela(objetoDosDiasdeQuinta, mídiaSheet, row, column)
 
 def planilhaDoFly():
     fazerUmaEscala("Fly", "pré", "quinta")
@@ -384,220 +310,57 @@ def planilhaDoFly():
     fazerUmaEscala("Fly", "babys", "domingo")
 
     flySheet = workbook.create_sheet("Fly")
-    if objetoDosDiasdeQuinta[0].dia < objetoDosDiasdeDomingo[0].dia:
+
+    if objetoDosDiasdeDomingo[0].dia > objetoDosDiasdeQuinta[0].dia:
+
+        row = 1
         column = 1
-    else:
+        fazerUmaTabela(objetoDosDiasdeQuinta, flySheet, row, column)
+
+        row = 1
         column = 4
-
-    row = 1
-    for dia in objetoDosDiasdeQuinta:
-        # Mescla as células
-        flySheet.merge_cells(start_row=row, start_column=column, end_row=row, end_column=column + 1)
-
-        # Define a célula no canto superior esquerdo da fusão
-        titleCell = flySheet.cell(row=row, column=column)
-
-        # Define o valor da célula
-        titleCell.value = f"QUINTA - {dia.dia}/{mes}"
-
-        # Define a cor de fundo
-        titleCell.fill = PatternFill("solid", fgColor="00339966")
-
-        # Define a cor da fonte
-        titleCell.font = Font(color="00FFFFFF")
-
-        # Aplica o alinhamento
-        titleCell.alignment = Alignment(horizontal="center", vertical="center")
-
-        # Define a borda em todos os lados
-        titleCell.border = border_style
-
-        row += 1
-        flySheet.cell(row=row, column=column, value=f"Voluntários")
-        blackCell = flySheet.cell(row=row, column=column)
-        blackCell.fill = PatternFill("solid", fgColor = "00333333")
-        blackCell.font = Font(color = "00FFFFFF")
-        blackCell.alignment = Alignment(horizontal="center", vertical="center")
-
-        column += 1
-        flySheet.cell(row=row, column=column, value=f"Função")
-        blackCell = flySheet.cell(row=row, column=column)
-        blackCell.fill = PatternFill("solid", fgColor = "00333333")
-        blackCell.font = Font(color = "00FFFFFF")
-        blackCell.alignment = Alignment(horizontal="center", vertical="center")
-
-        row += 1
-        column -= 1
-        cell = flySheet.cell(row=row, column=column, value=f"{dia.professorPré}")
-        cell.alignment = Alignment(horizontal="center", vertical="center")
-        cell.border = Border(left=border_style, right=border_style, top=border_style, bottom=border_style)
-        column += 1
-        cell = flySheet.cell(row=row, column=column, value=f"Pré")
-        cell.alignment = Alignment(horizontal="center", vertical="center")
-        cell.border = Border(left=border_style, right=border_style, top=border_style, bottom=border_style)
-        row += 1
-        column -= 1
-        cell = flySheet.cell(row=row, column=column, value=f"{dia.professorKids}")
-        cell.alignment = Alignment(horizontal="center", vertical="center")
-        cell.border = Border(left=border_style, right=border_style, top=border_style, bottom=border_style)
-        column += 1
-        cell = flySheet.cell(row=row, column=column, value=f"Kids")
-        cell.alignment = Alignment(horizontal="center", vertical="center")
-        cell.border = Border(left=border_style, right=border_style, top=border_style, bottom=border_style)
-        row += 1
-        column -= 1
-        cell = flySheet.cell(row=row, column=column, value=f"{dia.professorBabys}")
-        cell.alignment = Alignment(horizontal="center", vertical="center")
-        cell.border = Border(left=border_style, right=border_style, top=border_style, bottom=border_style)
-        column += 1
-        cell = flySheet.cell(row=row, column=column, value=f"Babys")
-        cell.alignment = Alignment(horizontal="center", vertical="center")
-        cell.border = Border(left=border_style, right=border_style, top=border_style, bottom=border_style)
-
-        row += 2
-        column -= 1
+        fazerUmaTabela(objetoDosDiasdeDomingo, flySheet, row, column)
 
     if objetoDosDiasdeQuinta[0].dia > objetoDosDiasdeDomingo[0].dia:
+
+        row = 1
         column = 1
-    else:
+        fazerUmaTabela(objetoDosDiasdeDomingo, flySheet, row, column)
+        
+        row = 1
         column = 4
+        fazerUmaTabela(objetoDosDiasdeQuinta, flySheet, row, column)
 
-    row = 1
-    for dia in objetoDosDiasdeDomingo:
-        # Mescla as células
-        flySheet.merge_cells(start_row=row, start_column=column, end_row=row, end_column=column + 1)
+def planilhaDoLouvor():
+    # fazerUmaEscala("Louvor", "ministro", "quinta")
+    # fazerUmaEscala("Louvor", "bateria", "quinta")
+    # fazerUmaEscala("Louvor", "teclado", "quinta")
 
-        # Define a célula no canto superior esquerdo da fusão
-        titleCell = flySheet.cell(row=row, column=column)
+    # fazerUmaEscala("Louvor", "ministro", "domingo")
+    # fazerUmaEscala("Louvor", "bateria", "domingo")
+    # fazerUmaEscala("Louvor", "teclado", "domingo")
 
-        # Define o valor da célula
-        titleCell.value = f"DOMINGO - {dia.dia}/{mes}"
+    louvorSheet = workbook.create_sheet("Louvor")
 
-        # Define a cor de fundo
-        titleCell.fill = PatternFill("solid", fgColor="003366FF")
+    if objetoDosDiasdeDomingo[0].dia > objetoDosDiasdeQuinta[0].dia:
 
-        # Define a cor da fonte
-        titleCell.font = Font(color="00FFFFFF")
+        row = 1
+        column = 1
+        fazerUmaTabela(objetoDosDiasdeQuinta, louvorSheet, row, column)
 
-        # Aplica o alinhamento
-        titleCell.alignment = Alignment(horizontal="center", vertical="center")
+        row = 1
+        column = 4
+        fazerUmaTabela(objetoDosDiasdeDomingo, louvorSheet, row, column)
 
-        # Define a borda em todos os lados
-        titleCell.border = border_style
+    if objetoDosDiasdeQuinta[0].dia > objetoDosDiasdeDomingo[0].dia:
 
-        row += 1
-        flySheet.cell(row=row, column=column, value=f"Voluntários")
-        blackCell = flySheet.cell(row=row, column=column)
-        blackCell.fill = PatternFill("solid", fgColor = "00333333")
-        blackCell.font = Font(color = "00FFFFFF")
-        blackCell.alignment = Alignment(horizontal="center", vertical="center")
-
-        column += 1
-        flySheet.cell(row=row, column=column, value=f"Função")
-        blackCell = flySheet.cell(row=row, column=column)
-        blackCell.fill = PatternFill("solid", fgColor = "00333333")
-        blackCell.font = Font(color = "00FFFFFF")
-        blackCell.alignment = Alignment(horizontal="center", vertical="center")
-
-        row += 1
-        column -= 1
-        cell = flySheet.cell(row=row, column=column, value=f"{dia.professorPré}")
-        cell.alignment = Alignment(horizontal="center", vertical="center")
-        cell.border = Border(left=border_style, right=border_style, top=border_style, bottom=border_style)
-        column += 1
-        cell = flySheet.cell(row=row, column=column, value=f"Pré")
-        cell.alignment = Alignment(horizontal="center", vertical="center")
-        cell.border = Border(left=border_style, right=border_style, top=border_style, bottom=border_style)
-        row += 1
-        column -= 1
-        cell = flySheet.cell(row=row, column=column, value=f"{dia.professorKids}")
-        cell.alignment = Alignment(horizontal="center", vertical="center")
-        cell.border = Border(left=border_style, right=border_style, top=border_style, bottom=border_style)
-        column += 1
-        cell = flySheet.cell(row=row, column=column, value=f"Kids")
-        cell.alignment = Alignment(horizontal="center", vertical="center")
-        cell.border = Border(left=border_style, right=border_style, top=border_style, bottom=border_style)
-        row += 1
-        column -= 1
-        cell = flySheet.cell(row=row, column=column, value=f"{dia.professorBabys}")
-        cell.alignment = Alignment(horizontal="center", vertical="center")
-        cell.border = Border(left=border_style, right=border_style, top=border_style, bottom=border_style)
-        column += 1
-        cell = flySheet.cell(row=row, column=column, value=f"Babys")
-        cell.alignment = Alignment(horizontal="center", vertical="center")
-        cell.border = Border(left=border_style, right=border_style, top=border_style, bottom=border_style)
-
-        row += 2
-        column -= 1
-
-    row = 1
-    column = 7
-    for dia in objetoDosDiasdeSabado:
-        # Mescla as células
-        flySheet.merge_cells(start_row=row, start_column=column, end_row=row, end_column=column + 1)
-
-        # Define a célula no canto superior esquerdo da fusão
-        titleCell = flySheet.cell(row=row, column=column)
-
-        # Define o valor da célula
-        titleCell.value = f"SÁBADO - {dia.dia}/{mes}"
-
-        # Define a cor de fundo
-        titleCell.fill = PatternFill("solid", fgColor="00003366")
-
-        # Define a cor da fonte
-        titleCell.font = Font(color="00FFFFFF")
-
-        # Aplica o alinhamento
-        titleCell.alignment = Alignment(horizontal="center", vertical="center")
-
-        # Define a borda em todos os lados
-        titleCell.border = border_style
-
-        row += 1
-        flySheet.cell(row=row, column=column, value=f"Voluntários")
-        blackCell = flySheet.cell(row=row, column=column)
-        blackCell.fill = PatternFill("solid", fgColor = "00333333")
-        blackCell.font = Font(color = "00FFFFFF")
-        blackCell.alignment = Alignment(horizontal="center", vertical="center")
-
-        column += 1
-        flySheet.cell(row=row, column=column, value=f"Função")
-        blackCell = flySheet.cell(row=row, column=column)
-        blackCell.fill = PatternFill("solid", fgColor = "00333333")
-        blackCell.font = Font(color = "00FFFFFF")
-        blackCell.alignment = Alignment(horizontal="center", vertical="center")
-
-        row += 1
-        column -= 1
-        cell = flySheet.cell(row=row, column=column, value=f"{dia.professorPré}")
-        cell.alignment = Alignment(horizontal="center", vertical="center")
-        cell.border = Border(left=border_style, right=border_style, top=border_style, bottom=border_style)
-        column += 1
-        cell = flySheet.cell(row=row, column=column, value=f"Pré")
-        cell.alignment = Alignment(horizontal="center", vertical="center")
-        cell.border = Border(left=border_style, right=border_style, top=border_style, bottom=border_style)
-        row += 1
-        column -= 1
-        cell = flySheet.cell(row=row, column=column, value=f"{dia.professorKids}")
-        cell.alignment = Alignment(horizontal="center", vertical="center")
-        cell.border = Border(left=border_style, right=border_style, top=border_style, bottom=border_style)
-        column += 1
-        cell = flySheet.cell(row=row, column=column, value=f"Kids")
-        cell.alignment = Alignment(horizontal="center", vertical="center")
-        cell.border = Border(left=border_style, right=border_style, top=border_style, bottom=border_style)
-        row += 1
-        column -= 1
-        cell = flySheet.cell(row=row, column=column, value=f"{dia.professorBabys}")
-        cell.alignment = Alignment(horizontal="center", vertical="center")
-        cell.border = Border(left=border_style, right=border_style, top=border_style, bottom=border_style)
-        column += 1
-        cell = flySheet.cell(row=row, column=column, value=f"Babys")
-        cell.alignment = Alignment(horizontal="center", vertical="center")
-        cell.border = Border(left=border_style, right=border_style, top=border_style, bottom=border_style)
-
-        row += 2
-        column -= 1
+        row = 1
+        column = 1
+        fazerUmaTabela(objetoDosDiasdeDomingo, louvorSheet, row, column)
+        
+        row = 1
+        column = 4
+        fazerUmaTabela(objetoDosDiasdeQuinta, louvorSheet, row, column)
 
 def planilhasDosDias():
     daysSheet = workbook.create_sheet("Dias")
@@ -988,9 +751,27 @@ def planilhasDosDias():
             except(IndexError):
                 print("\nChegou ao limite\n")
 
+
+def relatórioDePessoas():
+    relatório = workbook.create_sheet("Frequência")
+    row = 1 
+    column = 1
+    i = 0
+    while i != len(Voluntários):   
+        cell = relatório.cell(row=row, column=column)
+        cell.value = Voluntários[i]["nome"]
+        column += 1
+        cell = relatório.cell(row=row, column=column)
+        cell.value = Voluntários[i]["diasServidos"]
+        column -= 1
+        row += 1
+        i += 1
+
 planilhaDoFly()
 planilhaDaMídia()
 planilhasDosDias()
+planilhaDoLouvor()
+relatórioDePessoas()
 
 
 workbook.save(f"Escala.xlsx")
