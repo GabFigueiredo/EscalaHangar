@@ -25,9 +25,9 @@ class diaServentia:
         self.Mesa = None
         
         # Teens
-        self.professorPré = None
-        self.professorKids = None
-        self.professorBabys = None
+        self.Pré = None
+        self.Kids = None
+        self.Babys = None
         self.Auxiliares = []
 
         # LOUVOR
@@ -80,12 +80,17 @@ for dia in diasDeSabado:
     objetoDosDiasdeSabado.append(temp)
 
 funcao_para_atributo = {
-        "foto": "Foto",
-        "story": "Story",
-        "mesa": "Mesa",
-        "pré": "professorPré",
-        "kids": "professorKids",
-        "babys": "professorBabys"
+        "Foto": "Foto",
+        "Story": "Story",
+        "Mesa": "Mesa",
+        "Pré": "Pré",
+        "Kids": "Kids",
+        "Babys": "Babys",
+        "Backs": "diasDeBacks",
+        "Bateria": "diasDeBateria",
+        "Teclado": "diasDeTeclado",
+        "Guitarra": "diasDeGuitarra",
+        "Baixo": "diasDeBaixo"
     }
 
 def fazerUmaEscala(ministerio, funcao, dia):
@@ -144,11 +149,101 @@ def fazerUmaEscala(ministerio, funcao, dia):
 diasJuntos = objetoDosDiasdeQuinta + objetoDosDiasdeDomingo  
 
 def fazerEscalaPorDia():
-    diasJuntosSortidos = random.shuffle(diasJuntos)
-    metaParaTodos = 1
-    for dia in diasJuntosSortidos:
+    random.shuffle(Voluntários)
+
+    metaPorFunção = {
+        "foto": 0,
+        "story": 0,
+        "mesa": 0,
+        "pré": 0,
+        "kids": 0,
+        "babys": 0
+    }
+
+    dias_por_atributo = {
+        "Foto": "diasDeFoto",
+        "Story": "diasDeStory",
+        "Mesa": "diasDeMesa",
+        "Pré": "diasDePré",
+        "Kids": "diasDeKids",
+        "Babys": "diasDeBabys",
+        "Backs": "diasDeBacks",
+        "Bateria": "diasDeBateria",
+        "Teclado": "diasDeTeclado",
+        "Guitarra": "diasDeGuitarra",
+        "Baixo": "diasDeBaixo"
+    }
+
+    for dia in diasJuntos:
+        metaParaTodos = 1
+        ministerio = ""
+        i = 0
         for atributo, valor in vars(dia).items():
-            
+            if atributo == "Ministro": print("Eu achei um Ministro")
+
+            if atributo in ["dia", "tipo", "Ministro", "Auxiliares"]: continue
+
+            if atributo in ["Foto", "Story", "Mesa"]:
+                ministerio = "Mídia"
+            if atributo in ["Pré", "Kids", "Babys"]:
+                ministerio = "Fly"
+            if atributo in ["Backs", "Bateria", "Teclado", "Guitarra", "Baixo", "Violão"]:
+                ministerio = "Louvor"
+            while True:
+                print(f"Nome do atributo: {atributo}")
+
+                if (
+                    # Se o voluntário está no ministério
+                    ministerio in Voluntários[i]["ministerios"]
+                    # Se o voluntário faz a função
+                    and atributo in Voluntários[i]["funcoes"]
+                    # Se o voluntário está dentro do limite
+                    and Voluntários[i]["diasServidos"] < metaParaTodos
+                    # Se o voluntário já não serve no dia
+                    and dia.dia not in Voluntários[i]["servindoNosDias"]
+                    # Se o voluntário serve no dia da semana
+                    and Voluntários[i][dia.tipo]    
+                ):
+                    if atributo == "Backs":
+                        while True:
+                            if (
+                                # Se o voluntário está no ministério
+                                ministerio in Voluntários[i]["ministerios"]
+                                # Se o voluntário faz a função
+                                and atributo in Voluntários[i]["funcoes"]
+                                # Se o voluntário está dentro do limite
+                                and Voluntários[i]["diasServidos"] < metaParaTodos
+                                # Se o voluntário já não serve no dia
+                                and dia.dia not in Voluntários[i]["servindoNosDias"]
+                                # Se o voluntário serve no dia da semana
+                                and Voluntários[i][dia.tipo]    
+                            ):
+                                print("Achei um voluntário capaz")
+                                novaLista = valor
+                                novaLista.append(Voluntários[i]["nome"])
+                                setattr(dia, atributo, novaLista)
+                                Voluntários[i]["diasServidos"] += 1
+                                Voluntários[i]["servindoNosDias"].append(dia.dia)
+                                i = 0
+                                print(len(valor))
+                                if len(valor) == 3: break
+                            else: i += 1
+                        if len(valor) == 3: break
+                    else: 
+                        print("\033[92m PASSOU! \033[00m\n ")
+
+                        setattr(dia, atributo, Voluntários[i]["nome"])
+                            
+                        Voluntários[i]["diasServidos"] += 1
+                        Voluntários[i]["servindoNosDias"].append(dia.dia)
+                        i = 0
+                        break
+                
+                elif Voluntários[i] == Voluntários[-1]:
+                    i = 0
+                    metaParaTodos += 1 
+                else:
+                    i += 1
 
 workbook = Workbook()
 
@@ -271,12 +366,12 @@ def fazerUmaTabela(listaDosDias, folha, row, column):
 
 def planilhaDaMídia():
 
-    fazerUmaEscala("Mídia", "story", "domingo")
-    fazerUmaEscala("Mídia", "mesa", "quinta")
-    fazerUmaEscala("Mídia", "foto", "domingo")
-    fazerUmaEscala("Mídia", "story", "quinta")
-    fazerUmaEscala("Mídia", "mesa", "domingo")
-    fazerUmaEscala("Mídia", "foto", "quinta")
+    # fazerUmaEscala("Mídia", "story", "domingo")
+    # fazerUmaEscala("Mídia", "mesa", "quinta")
+    # fazerUmaEscala("Mídia", "foto", "domingo")
+    # fazerUmaEscala("Mídia", "story", "quinta")
+    # fazerUmaEscala("Mídia", "mesa", "domingo")
+    # fazerUmaEscala("Mídia", "foto", "quinta")
 
     mídiaSheet = workbook.active
     mídiaSheet.title = "Mídia"
@@ -301,13 +396,13 @@ def planilhaDaMídia():
         fazerUmaTabela(objetoDosDiasdeQuinta, mídiaSheet, row, column)
 
 def planilhaDoFly():
-    fazerUmaEscala("Fly", "pré", "quinta")
-    fazerUmaEscala("Fly", "kids", "quinta")
-    fazerUmaEscala("Fly", "babys", "quinta")
+    # fazerUmaEscala("Fly", "pré", "quinta")
+    # fazerUmaEscala("Fly", "kids", "quinta")
+    # fazerUmaEscala("Fly", "babys", "quinta")
 
-    fazerUmaEscala("Fly", "pré", "domingo")
-    fazerUmaEscala("Fly", "kids", "domingo")
-    fazerUmaEscala("Fly", "babys", "domingo")
+    # fazerUmaEscala("Fly", "pré", "domingo")
+    # fazerUmaEscala("Fly", "kids", "domingo")
+    # fazerUmaEscala("Fly", "babys", "domingo")
 
     flySheet = workbook.create_sheet("Fly")
 
@@ -330,7 +425,7 @@ def planilhaDoFly():
         row = 1
         column = 4
         fazerUmaTabela(objetoDosDiasdeQuinta, flySheet, row, column)
-
+        
 def planilhaDoLouvor():
     # fazerUmaEscala("Louvor", "ministro", "quinta")
     # fazerUmaEscala("Louvor", "bateria", "quinta")
@@ -372,385 +467,104 @@ def planilhasDosDias():
     i = 0
     column = 1
 
-    if objetoDosDiasdeQuinta[0].dia > objetoDosDiasdeDomingo[0].dia:
+    listaJunta = objetoDosDiasdeQuinta + objetoDosDiasdeDomingo
+    listaDeDiasOrdenados = sorted(listaJunta, key=lambda evento: evento.dia)
 
-        for i in range(maiorLargura):
-            try:
-                row = 1
-                # Mescla as células
-                daysSheet.merge_cells(start_row=row, start_column=column, end_row=row, end_column=column + 1)
+    for dia in listaDeDiasOrdenados:
+        row = 1
+        # Mescla as células
+        daysSheet.merge_cells(start_row=row, start_column=column, end_row=row, end_column=column + 1)
 
-                # Define a célula no canto superior esquerdo da fusão
-                titleCell = daysSheet.cell(row=row, column=column)
+        # Define a célula no canto superior esquerdo da fusão
+        titleCell = daysSheet.cell(row=row, column=column)
 
-                # Define o valor da célula
-                titleCell.value = f"DOMINGO - {objetoDosDiasdeDomingo[i].dia}/{mes}"
+        # Define o valor da célula
+        titleCell.value = f"{dia.tipo.upper()} - {dia.dia}/{mes}"
 
-                # Define a cor de fundo
-                titleCell.fill = PatternFill("solid", fgColor="003366FF")
+        # Define a cor de fundo
+        if dia.tipo == "quinta":
+            titleCell.fill = PatternFill("solid", fgColor="00339966")
+        if dia.tipo == "domingo":
+            titleCell.fill = PatternFill("solid", fgColor="003366FF")
+        if dia.tipo == "sabado":
+            titleCell.fill = PatternFill("solid", fgColor="00003366")
 
-                # Define a cor da fonte
-                titleCell.font = Font(color="00FFFFFF")
+        # Define a cor da fonte
+        titleCell.font = Font(color="00FFFFFF")
 
-                # Aplica o alinhamento
-                titleCell.alignment = Alignment(horizontal="center", vertical="center")
+        # Aplica o alinhamento
+        titleCell.alignment = Alignment(horizontal="center", vertical="center")
 
-                # Define a borda em todos os lados
-                titleCell.border = border_style
+        # Define a borda em todos os lados
+        titleCell.border = border_style
 
+        row += 1
+        daysSheet.cell(row=row, column=column, value=f"Voluntários")
+        blackCell = daysSheet.cell(row=row, column=column)
+        blackCell.fill = PatternFill("solid", fgColor = "00333333")
+        blackCell.font = Font(color = "00FFFFFF")
+        blackCell.alignment = Alignment(horizontal="center", vertical="center")
+
+        column += 1
+        daysSheet.cell(row=row, column=column, value=f"Função")
+        blackCell = daysSheet.cell(row=row, column=column)
+        blackCell.fill = PatternFill("solid", fgColor = "00333333")
+        blackCell.font = Font(color = "00FFFFFF")
+        blackCell.alignment = Alignment(horizontal="center", vertical="center")
+
+        for atributo, valor in vars(dia).items():
+
+            if (atributo == "Foto"):
+                column -= 1
                 row += 1
-                daysSheet.cell(row=row, column=column, value=f"Voluntários")
-                blackCell = daysSheet.cell(row=row, column=column)
-                blackCell.fill = PatternFill("solid", fgColor = "00333333")
-                blackCell.font = Font(color = "00FFFFFF")
-                blackCell.alignment = Alignment(horizontal="center", vertical="center")
 
-                column += 1
-                daysSheet.cell(row=row, column=column, value=f"Função")
-                blackCell = daysSheet.cell(row=row, column=column)
-                blackCell.fill = PatternFill("solid", fgColor = "00333333")
-                blackCell.font = Font(color = "00FFFFFF")
-                blackCell.alignment = Alignment(horizontal="center", vertical="center")
-
-                for atributo, valor in vars(objetoDosDiasdeQuinta[i]).items():
-
-                    if (atributo == "Foto"):
-                        column -= 1
-                        row += 1
-
-                        daysSheet.merge_cells(start_row=row, start_column=column, end_row=row, end_column=column + 1)
-                        celulaMinisterio = daysSheet.cell(row=row, column=column)
-                        celulaMinisterio.value = f"MÍDIA"
-                        celulaMinisterio.fill = PatternFill("solid", fgColor="00969696")
-                        celulaMinisterio.font = Font(color="00FFFFFF")
-                        celulaMinisterio.alignment = Alignment(horizontal="center", vertical="center")
-                        
-                        column += 1
-
-                    if (atributo == "professorPré"):
-                        column -= 1
-                        row += 1
-                        daysSheet.merge_cells(start_row=row, start_column=column, end_row=row, end_column=column + 1)
-                        celulaMinisterio = daysSheet.cell(row=row, column=column)
-                        celulaMinisterio.value = f"FLY"
-                        celulaMinisterio.fill = PatternFill("solid", fgColor="00969696")
-                        celulaMinisterio.font = Font(color="00FFFFFF")
-                        celulaMinisterio.alignment = Alignment(horizontal="center", vertical="center")
-                        
-                        column += 1
-
-                    if (atributo == "Ministro"):
-                        column -= 1
-                        row += 1
-
-                        daysSheet.merge_cells(start_row=row, start_column=column, end_row=row, end_column=column + 1)
-                        celulaMinisterio = daysSheet.cell(row=row, column=column)
-                        celulaMinisterio.value = f"LOUVOR"
-                        celulaMinisterio.fill = PatternFill("solid", fgColor="00969696")
-                        celulaMinisterio.font = Font(color="00FFFFFF")
-                        celulaMinisterio.alignment = Alignment(horizontal="center", vertical="center")
-                        
-                        column += 1
-
-                    row += 1
-                    column -= 1
-                    cell = daysSheet.cell(row=row, column=column, value=f"{valor}")
-                    cell.alignment = Alignment(horizontal="center", vertical="center")
-                    cell.border = Border(left=border_style, right=border_style, top=border_style, bottom=border_style)
-                    column += 1
-                    cell = daysSheet.cell(row=row, column=column, value=f"{atributo}")
-                    cell.alignment = Alignment(horizontal="center", vertical="center")
-                    cell.border = Border(left=border_style, right=border_style, top=border_style, bottom=border_style)
-
-                column += 2
-
-                row = 1
-
-            except(IndexError):
-
-                print("\nChegou ao limite\n")
-
-            try:
-
-                # Mescla as células
                 daysSheet.merge_cells(start_row=row, start_column=column, end_row=row, end_column=column + 1)
-
-                # Define a célula no canto superior esquerdo da fusão
-                titleCell = daysSheet.cell(row=row, column=column)
-
-                # Define o valor da célula
-                titleCell.value = f"QUINTA - {objetoDosDiasdeQuinta[i].dia}/{mes}"
-
-                # Define a cor de fundo
-                titleCell.fill = PatternFill("solid", fgColor="00339966")
-
-                # Define a cor da fonte
-                titleCell.font = Font(color="00FFFFFF")
-
-                # Aplica o alinhamento
-                titleCell.alignment = Alignment(horizontal="center", vertical="center")
-
-                # Define a borda em todos os lados
-                titleCell.border = border_style
-
-
-                row += 1
-                daysSheet.cell(row=row, column=column, value=f"Voluntários")
-                blackCell = daysSheet.cell(row=row, column=column)
-                blackCell.fill = PatternFill("solid", fgColor = "00333333")
-                blackCell.font = Font(color = "00FFFFFF")
-                blackCell.alignment = Alignment(horizontal="center", vertical="center")
-
+                celulaMinisterio = daysSheet.cell(row=row, column=column)
+                celulaMinisterio.value = f"MÍDIA"
+                celulaMinisterio.fill = PatternFill("solid", fgColor="00969696")
+                celulaMinisterio.font = Font(color="00FFFFFF")
+                celulaMinisterio.alignment = Alignment(horizontal="center", vertical="center")
+                
                 column += 1
-                daysSheet.cell(row=row, column=column, value=f"Função")
-                blackCell = daysSheet.cell(row=row, column=column)
-                blackCell.fill = PatternFill("solid", fgColor = "00333333")
-                blackCell.font = Font(color = "00FFFFFF")
-                blackCell.alignment = Alignment(horizontal="center", vertical="center")
 
-                for atributo, valor in vars(objetoDosDiasdeQuinta[i]).items():
-
-                    if (atributo == "Foto"):
-                        column -= 1
-                        row += 1
-
-                        daysSheet.merge_cells(start_row=row, start_column=column, end_row=row, end_column=column + 1)
-                        celulaMinisterio = daysSheet.cell(row=row, column=column)
-                        celulaMinisterio.value = f"MÍDIA"
-                        celulaMinisterio.fill = PatternFill("solid", fgColor="00969696")
-                        celulaMinisterio.font = Font(color="00FFFFFF")
-                        celulaMinisterio.alignment = Alignment(horizontal="center", vertical="center")
-                        
-                        column += 1
-
-                    if (atributo == "professorPré"):
-                        column -= 1
-                        row += 1
-                        daysSheet.merge_cells(start_row=row, start_column=column, end_row=row, end_column=column + 1)
-                        celulaMinisterio = daysSheet.cell(row=row, column=column)
-                        celulaMinisterio.value = f"FLY"
-                        celulaMinisterio.fill = PatternFill("solid", fgColor="00969696")
-                        celulaMinisterio.font = Font(color="00FFFFFF")
-                        celulaMinisterio.alignment = Alignment(horizontal="center", vertical="center")
-                        
-                        column += 1
-
-                    if (atributo == "Ministro"):
-                        column -= 1
-                        row += 1
-                        daysSheet.merge_cells(start_row=row, start_column=column, end_row=row, end_column=column + 1)
-                        celulaMinisterio = daysSheet.cell(row=row, column=column)
-                        celulaMinisterio.value = f"LOUVOR"
-                        celulaMinisterio.fill = PatternFill("solid", fgColor="00969696")
-                        celulaMinisterio.font = Font(color="00FFFFFF")
-                        celulaMinisterio.alignment = Alignment(horizontal="center", vertical="center")
-                        
-                        column += 1
-
-                    row += 1
-                    column -= 1
-                    cell = daysSheet.cell(row=row, column=column, value=f"{valor}")
-                    cell.alignment = Alignment(horizontal="center", vertical="center")
-                    cell.border = Border(left=border_style, right=border_style, top=border_style, bottom=border_style)
-                    column += 1
-                    cell = daysSheet.cell(row=row, column=column, value=f"{atributo}")
-                    cell.alignment = Alignment(horizontal="center", vertical="center")
-                    cell.border = Border(left=border_style, right=border_style, top=border_style, bottom=border_style)
-
-                column += 2
-
-                row = 1
-            except(IndexError):
-                print("\nChegou ao limite\n") 
-
-    else:
-        for i in range(maiorLargura):
-            try:    
-                row = 1
-                # Mescla as células
+            if (atributo == "Pré"):
+                column -= 1
+                row += 1
                 daysSheet.merge_cells(start_row=row, start_column=column, end_row=row, end_column=column + 1)
-
-                # Define a célula no canto superior esquerdo da fusão
-                titleCell = daysSheet.cell(row=row, column=column)
-
-                # Define o valor da célula
-                titleCell.value = f"QUINTA - {objetoDosDiasdeQuinta[i].dia}/{mes}"
-
-                # Define a cor de fundo
-                titleCell.fill = PatternFill("solid", fgColor="00339966")
-
-                # Define a cor da fonte
-                titleCell.font = Font(color="00FFFFFF")
-
-                # Aplica o alinhamento
-                titleCell.alignment = Alignment(horizontal="center", vertical="center")
-
-                # Define a borda em todos os lados
-                titleCell.border = border_style
-
-                        
-                row += 1
-                daysSheet.cell(row=row, column=column, value=f"Voluntários")
-                blackCell = daysSheet.cell(row=row, column=column)
-                blackCell.fill = PatternFill("solid", fgColor = "00333333")
-                blackCell.font = Font(color = "00FFFFFF")
-                blackCell.alignment = Alignment(horizontal="center", vertical="center")
-
+                celulaMinisterio = daysSheet.cell(row=row, column=column)
+                celulaMinisterio.value = f"FLY"
+                celulaMinisterio.fill = PatternFill("solid", fgColor="00969696")
+                celulaMinisterio.font = Font(color="00FFFFFF")
+                celulaMinisterio.alignment = Alignment(horizontal="center", vertical="center")
+                
                 column += 1
-                daysSheet.cell(row=row, column=column, value=f"Função")
-                blackCell = daysSheet.cell(row=row, column=column)
-                blackCell.fill = PatternFill("solid", fgColor = "00333333")
-                blackCell.font = Font(color = "00FFFFFF")
-                blackCell.alignment = Alignment(horizontal="center", vertical="center")
 
-                for atributo, valor in vars(objetoDosDiasdeQuinta[i]).items():
+            if (atributo == "Ministro"):
+                column -= 1
+                row += 1
 
-                    if (atributo == "Foto"):
-                        column -= 1
-                        row += 1
-                        daysSheet.merge_cells(start_row=row, start_column=column, end_row=row, end_column=column + 1)
-                        celulaMinisterio = daysSheet.cell(row=row, column=column)
-                        celulaMinisterio.value = f"MÍDIA"
-                        celulaMinisterio.fill = PatternFill("solid", fgColor="00969696")
-                        celulaMinisterio.font = Font(color="00FFFFFF")
-                        celulaMinisterio.alignment = Alignment(horizontal="center", vertical="center")
-                        
-                        column += 1
-
-                    if (atributo == "professorPré"):
-                        column -= 1
-                        row += 1
-                        daysSheet.merge_cells(start_row=row, start_column=column, end_row=row, end_column=column + 1)
-                        celulaMinisterio = daysSheet.cell(row=row, column=column)
-                        celulaMinisterio.value = f"FLY"
-                        celulaMinisterio.fill = PatternFill("solid", fgColor="00969696")
-                        celulaMinisterio.font = Font(color="00FFFFFF")
-                        celulaMinisterio.alignment = Alignment(horizontal="center", vertical="center")
-                        
-                        column += 1
-
-                    if (atributo == "Ministro"):
-                        column -= 1
-                        row += 1
-                        daysSheet.merge_cells(start_row=row, start_column=column, end_row=row, end_column=column + 1)
-                        celulaMinisterio = daysSheet.cell(row=row, column=column)
-                        celulaMinisterio.value = f"LOUVOR"
-                        celulaMinisterio.fill = PatternFill("solid", fgColor="00969696")
-                        celulaMinisterio.font = Font(color="00FFFFFF")
-                        celulaMinisterio.alignment = Alignment(horizontal="center", vertical="center")
-                        
-                        column += 1
-
-                    row += 1
-                    column -= 1
-                    cell = daysSheet.cell(row=row, column=column, value=f"{valor}")
-                    cell.alignment = Alignment(horizontal="center", vertical="center")
-                    cell.border = Border(left=border_style, right=border_style, top=border_style, bottom=border_style)
-                    column += 1
-                    cell = daysSheet.cell(row=row, column=column, value=f"{atributo}")
-                    cell.alignment = Alignment(horizontal="center", vertical="center")
-                    cell.border = Border(left=border_style, right=border_style, top=border_style, bottom=border_style)
-
-                column += 2
-
-                row = 1
-
-            except(IndexError):
-                print("\nChegou ao limite\n")
-        
-            try:
-                # Mescla as células
                 daysSheet.merge_cells(start_row=row, start_column=column, end_row=row, end_column=column + 1)
-
-                # Define a célula no canto superior esquerdo da fusão
-                titleCell = daysSheet.cell(row=row, column=column)
-
-                # Define o valor da célula
-                titleCell.value = f"DOMINGO - {objetoDosDiasdeDomingo[i].dia}/{mes}"
-
-                # Define a cor de fundo
-                titleCell.fill = PatternFill("solid", fgColor="003366FF")
-
-                # Define a cor da fonte
-                titleCell.font = Font(color="00FFFFFF")
-
-                # Aplica o alinhamento
-                titleCell.alignment = Alignment(horizontal="center", vertical="center")
-
-                # Define a borda em todos os lados
-                titleCell.border = border_style
-
-                row += 1
-                daysSheet.cell(row=row, column=column, value=f"Voluntários")
-                blackCell = daysSheet.cell(row=row, column=column)
-                blackCell.fill = PatternFill("solid", fgColor = "00333333")
-                blackCell.font = Font(color = "00FFFFFF")
-                blackCell.alignment = Alignment(horizontal="center", vertical="center")
-
+                celulaMinisterio = daysSheet.cell(row=row, column=column)
+                celulaMinisterio.value = f"LOUVOR"
+                celulaMinisterio.fill = PatternFill("solid", fgColor="00969696")
+                celulaMinisterio.font = Font(color="00FFFFFF")
+                celulaMinisterio.alignment = Alignment(horizontal="center", vertical="center")
+                
                 column += 1
-                daysSheet.cell(row=row, column=column, value=f"Função")
-                blackCell = daysSheet.cell(row=row, column=column)
-                blackCell.fill = PatternFill("solid", fgColor = "00333333")
-                blackCell.font = Font(color = "00FFFFFF")
-                blackCell.alignment = Alignment(horizontal="center", vertical="center")
 
-                for atributo, valor in vars(objetoDosDiasdeQuinta[i]).items():
+            row += 1
+            column -= 1
+            cell = daysSheet.cell(row=row, column=column, value=f"{valor}")
+            cell.alignment = Alignment(horizontal="center", vertical="center")
+            cell.border = Border(left=border_style, right=border_style, top=border_style, bottom=border_style)
+            column += 1
+            cell = daysSheet.cell(row=row, column=column, value=f"{atributo}")
+            cell.alignment = Alignment(horizontal="center", vertical="center")
+            cell.border = Border(left=border_style, right=border_style, top=border_style, bottom=border_style)
 
-                    if (atributo == "Foto"):
-                        column -= 1
-                        row += 1
+        column += 2
 
-                        daysSheet.merge_cells(start_row=row, start_column=column, end_row=row, end_column=column + 1)
-                        celulaMinisterio = daysSheet.cell(row=row, column=column)
-                        celulaMinisterio.value = f"MÍDIA"
-                        celulaMinisterio.fill = PatternFill("solid", fgColor="00969696")
-                        celulaMinisterio.font = Font(color="00FFFFFF")
-                        celulaMinisterio.alignment = Alignment(horizontal="center", vertical="center")
-                        
-                        column += 1
-
-                    if (atributo == "professorPré"):
-                        column -= 1
-                        row += 1
-
-                        daysSheet.merge_cells(start_row=row, start_column=column, end_row=row, end_column=column + 1)
-                        celulaMinisterio = daysSheet.cell(row=row, column=column)
-                        celulaMinisterio.value = f"FLY"
-                        celulaMinisterio.fill = PatternFill("solid", fgColor="00969696")
-                        celulaMinisterio.font = Font(color="00FFFFFF")
-                        celulaMinisterio.alignment = Alignment(horizontal="center", vertical="center")
-                        
-                        column += 1
-
-                    if (atributo == "Ministro"):
-                        column -= 1
-                        row += 1
-
-                        daysSheet.merge_cells(start_row=row, start_column=column, end_row=row, end_column=column + 1)
-                        celulaMinisterio = daysSheet.cell(row=row, column=column)
-                        celulaMinisterio.value = f"LOUVOR"
-                        celulaMinisterio.fill = PatternFill("solid", fgColor="00969696")
-                        celulaMinisterio.font = Font(color="00FFFFFF")
-                        celulaMinisterio.alignment = Alignment(horizontal="center", vertical="center")
-                        
-                        column += 1
-
-                    row += 1
-                    column -= 1
-                    cell = daysSheet.cell(row=row, column=column, value=f"{valor}")
-                    cell.alignment = Alignment(horizontal="center", vertical="center")
-                    cell.border = Border(left=border_style, right=border_style, top=border_style, bottom=border_style)
-                    column += 1
-                    cell = daysSheet.cell(row=row, column=column, value=f"{atributo}")
-                    cell.alignment = Alignment(horizontal="center", vertical="center")
-                    cell.border = Border(left=border_style, right=border_style, top=border_style, bottom=border_style)
-
-                column += 2
-
-                row = 1
-            except(IndexError):
-                print("\nChegou ao limite\n")
-
+        row = 1
 
 def relatórioDePessoas():
     relatório = workbook.create_sheet("Frequência")
@@ -767,11 +581,12 @@ def relatórioDePessoas():
         row += 1
         i += 1
 
+fazerEscalaPorDia()
+
 planilhaDoFly()
 planilhaDaMídia()
 planilhasDosDias()
 planilhaDoLouvor()
 relatórioDePessoas()
-
 
 workbook.save(f"Escala.xlsx")
