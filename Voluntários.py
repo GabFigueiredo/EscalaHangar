@@ -1,4 +1,4 @@
-mes = 2
+mes = 12
 ano = 2024
 
 Voluntários = [
@@ -14,6 +14,8 @@ Voluntários = [
         },
         "ministerios": ["Mídia", "Fly"],
         "servindoNosDias": [],
+        "diasDeMesa": 0,
+        "diasDeKids": 0,
         "diasServidos": 0
     },
     {
@@ -28,19 +30,8 @@ Voluntários = [
         },
         "ministerios": ["Fly", "Mídia"],
         "servindoNosDias": [],
-        "diasServidos": 0
-    },
-    {
-        "nome": "João",
-        "quinta": True,
-        "domingo": True,
-        "funcoes": {
-            # Mídia
-            "Foto": True,
-            "Mesa": True
-        },
-        "ministerios": ["Mídia"],
-        "servindoNosDias": [],
+        "diasDeFoto": 0,
+        "diasDeMesa": 0,
         "diasServidos": 0
     },
     {
@@ -54,6 +45,8 @@ Voluntários = [
         },
         "ministerios": ["Mídia"],
         "servindoNosDias": [],
+        "diasDeFoto": 0,
+        "diasDeStory": 0,
         "diasServidos": 0
     },
     {
@@ -68,6 +61,8 @@ Voluntários = [
         },
         "ministerios": ["Mídia", "Fly", "Acolhimento"],
         "servindoNosDias": [],
+        "diasDeMesa": 0,
+        "diasDeKids": 0,
         "diasServidos": 0
     },
     {
@@ -81,6 +76,8 @@ Voluntários = [
         },
         "ministerios": ["Mídia", "Fly"],
         "servindoNosDias": [],
+        "diasDeMesa": 0,
+        "diasDePré": 0,
         "diasServidos": 0
     },
     {
@@ -95,6 +92,8 @@ Voluntários = [
         },
         "ministerios": ["Mídia", "Fly"],
         "servindoNosDias": [],
+        "diasDeFoto": 0,
+        "diasDeStory": 0,
         "diasServidos": 0
     },
     {
@@ -108,6 +107,8 @@ Voluntários = [
         },
         "ministerios": ["Mídia", "Fly"],
         "servindoNosDias": [],
+        "diasDeFoto": 0,
+        "diasDeStory": 0,
         "diasServidos": 0
     },
 
@@ -121,6 +122,7 @@ Voluntários = [
         },
         "ministerios": ["Fly", "Acolhimento"],
         "servindoNosDias": [],
+        "diasDeKids": 0,
         "diasServidos": 0
     },
     {
@@ -132,7 +134,7 @@ Voluntários = [
         },
         "ministerios": ["Fly"],
         "servindoNosDias": ["domingo"],
-        "diasServidos": 0
+        "diasServidos": 0,
     },
     {
         "nome": "Dani",
@@ -144,6 +146,8 @@ Voluntários = [
         },
         "ministerios": ["Fly"],
         "servindoNosDias": [],
+        "diasDeKids": 0,
+        "diasDePré": 0,
         "diasServidos": 0
     },
     {
@@ -158,6 +162,9 @@ Voluntários = [
         },
         "ministerios": ["Fly", "Acolhimento", "Louvor"],
         "servindoNosDias": [],
+        "diasDeKids": 0,
+        "diasDePré": 0,
+        "diasDeBacks": 0,
         "diasServidos": 0
     },
     {
@@ -169,6 +176,7 @@ Voluntários = [
         },
         "ministerios": ["Mídia", "Fly"],
         "servindoNosDias": [],
+        "diasDeKids": 0,
         "diasServidos": 0
     },
     {
@@ -191,6 +199,7 @@ Voluntários = [
         },
         "ministerios": ["Fly"],
         "servindoNosDias": [],
+        "diasDePré": 0,
         "diasServidos": 0
     },
     {
@@ -202,6 +211,7 @@ Voluntários = [
         },
         "ministerios": ["Louvor", "Fly"],
         "servindoNosDias": [],
+        "diasDePré": 0,
         "diasServidos": 0
     },
     {
@@ -214,6 +224,7 @@ Voluntários = [
         },
         "ministerios": ["Fly", "Louvor"],
         "servindoNosDias": [],
+        "diasDeBacks": 0,
         "diasServidos": 0
     },
     {
@@ -237,6 +248,8 @@ Voluntários = [
         },
         "ministerios": ["Fly"],
         "servindoNosDias": [],
+        "diasDeKids": 0,
+        "diasDePré": 0,
         "diasServidos": 0
     },
     {
@@ -248,6 +261,7 @@ Voluntários = [
         },
         "ministerios": ["Fly"],
         "servindoNosDias": [],
+        "diasDeKids": 0,
         "diasServidos": 0
     },
     {
@@ -259,6 +273,7 @@ Voluntários = [
         },
         "ministerios": ["Mídia"],
         "servindoNosDias": [],
+        "diasDeMesa": 0,
         "diasServidos": 0
     },
     {
@@ -272,6 +287,9 @@ Voluntários = [
         },
         "ministerios": ["Fly"],
         "servindoNosDias": [],
+        "diasDeKids": 0,
+        "diasDePré": 0,
+        "diasDeBabys": 0,
         "diasServidos": 0
     },
     {
@@ -285,6 +303,8 @@ Voluntários = [
         },
         "ministerios": ["Fly", "Mídia", "Louvor"],
         "servindoNosDias": [],
+        "diasDePré": 0,
+        "diasDeBacks": 0,
         "diasServidos": 0
     },
     {
@@ -308,6 +328,8 @@ Voluntários = [
         },
         "ministerios": ["Fly"],
         "servindoNosDias": [],
+        "diasDeKids": 0,
+        "diasDeBabys": 0,
         "diasServidos": 0
     },
     {
@@ -321,6 +343,9 @@ Voluntários = [
         },
         "ministerios": ["Fly"],
         "servindoNosDias": [],
+        "diasDeKids": 0,
+        "diasDePré": 0,
+        "diasDeBabys": 0,
         "diasServidos": 0
     },
     {
@@ -333,6 +358,8 @@ Voluntários = [
         },
         "ministerios": ["Fly"],
         "servindoNosDias": [],
+        "diasDeKids": 0,
+        "diasDeBabys": 0,
         "diasServidos": 0
     },
     {
@@ -345,6 +372,8 @@ Voluntários = [
         },
         "ministerios": ["Fly"],
         "servindoNosDias": [],
+        "diasDeKids": 0,
+        "diasDeBabys": 0,
         "diasServidos": 0
     },
     {
@@ -358,6 +387,8 @@ Voluntários = [
         },
         "ministerios": ["Acolhimento", "Louvor"],
         "servindoNosDias": [],
+        "diasDeBaixo": 0,
+        "diasDeViolão": 0,
         "diasServidos": 0
     },
     {
@@ -370,6 +401,7 @@ Voluntários = [
         },
         "ministerios": ["Acolhimento", "Louvor"],
         "servindoNosDias": [],
+        "diasDeBateria": 0,
         "diasServidos": 0
     },
     {
@@ -424,7 +456,7 @@ Voluntários = [
         "funcoes": {
             "Acolhimento": True,
         },
-        "ministerios": ["Acolhimento"],
+        "ministerios": ["Acolhimento"],""
         "servindoNosDias": [],
         "diasServidos": 0
     },
@@ -448,6 +480,7 @@ Voluntários = [
         },
         "ministerios": ["Louvor"],
         "servindoNosDias": [],
+        "diasDeBacks": 0,
         "diasServidos": 0
     },
     {
@@ -459,18 +492,8 @@ Voluntários = [
         },
         "ministerios": ["Louvor"],
         "servindoNosDias": [],
-        "diasServidos": 0
-    },
-    {
-        "nome": "Victoria",
-        "quinta": True,
-        "domingo": True,
-        "funcoes": {
-            "Backs": True,
-        },
-        "ministerios": ["Louvor"],
-        "servindoNosDias": [],
-        "diasServidos": 0
+        "diasServidos": 0,
+        "diasDeBacks": 0
     },
     {
         "nome": "Pr Aline",
@@ -481,6 +504,7 @@ Voluntários = [
         },
         "ministerios": ["Louvor"],
         "servindoNosDias": [],
+        "diasDeBacks": 0,
         "diasServidos": 0
     },
     {
@@ -492,6 +516,7 @@ Voluntários = [
         },
         "ministerios": ["Louvor"],
         "servindoNosDias": [],
+        "diasDeGuitarra": 0,
         "diasServidos": 0
     },
     {
@@ -503,6 +528,7 @@ Voluntários = [
         },
         "ministerios": ["Louvor"],
         "servindoNosDias": [],
+        "diasDeGuitarra": 0,
         "diasServidos": 0
     },
     {
@@ -514,6 +540,7 @@ Voluntários = [
         },
         "ministerios": ["Louvor"],
         "servindoNosDias": [],
+        "diasDeBateria": 0,
         "diasServidos": 0
     },
     {
@@ -525,10 +552,11 @@ Voluntários = [
         },
         "ministerios": ["Louvor"],
         "servindoNosDias": [],
+        "diasDeBaixo": 0,
         "diasServidos": 0
     },
     {
-        "nome": "Gabriel ARRUMAR",
+        "nome": "Gabriel Maju",
         "quinta": True,
         "domingo": True,
         "funcoes": {
@@ -536,6 +564,7 @@ Voluntários = [
         },
         "ministerios": ["Louvor"],
         "servindoNosDias": [],
+        "diasDeViolão": 0,
         "diasServidos": 0
     },
     {
@@ -547,6 +576,7 @@ Voluntários = [
         },
         "ministerios": ["Louvor"],
         "servindoNosDias": [],
+        "diasDeViolão": 0,
         "diasServidos": 0
     },
     {
@@ -558,6 +588,7 @@ Voluntários = [
         },
         "ministerios": ["Louvor"],
         "servindoNosDias": [],
+        "diasDeTeclado": 0,
         "diasServidos": 0
     },
     {
@@ -569,6 +600,7 @@ Voluntários = [
         },
         "ministerios": ["Louvor"],
         "servindoNosDias": [],
+        "diasDeTeclado": 0,
         "diasServidos": 0
     },
           
