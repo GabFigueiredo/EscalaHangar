@@ -91,59 +91,6 @@ funcao_para_atributo = {
         "Baixo": "diasDeBaixo"
     }
 
-def fazerUmaEscala(ministerio, funcao, dia):
-    
-    metaParaTodos = 1
-    if dia == "quinta":
-        for diaDeQuinta in objetoDosDiasdeQuinta:
-            random.shuffle(Voluntários)
-            i = 0
-            while i != len(Voluntários):  
-                if (
-                    ministerio in Voluntários[i]["ministerios"]
-                    and funcao in Voluntários[i]["funcoes"]
-                    and Voluntários[i]["diasServidos"] < metaParaTodos
-                    and diaDeQuinta.dia not in Voluntários[i]["servindoNosDias"]
-                    and Voluntários[i]["quinta"]
-                ):    
-                    if funcao in funcao_para_atributo:
-                        atributo = funcao_para_atributo[funcao]
-                        setattr(diaDeQuinta, atributo, Voluntários[i]["nome"])
-
-                    Voluntários[i]["diasServidos"] += 1
-                    Voluntários[i]["servindoNosDias"].append(diaDeQuinta.dia)
-                    break;
-                if Voluntários[i] == Voluntários[-1]:
-                    metaParaTodos += 1 
-                    i = 0
-                else:
-                    i += 1
-
-    if dia == "domingo":
-        for diaDeDomingo in objetoDosDiasdeDomingo:
-            random.shuffle(Voluntários)
-            i = 0
-            while i != len(Voluntários):
-                if (
-                    ministerio in Voluntários[i]["ministerios"]
-                    and funcao in Voluntários[i]["funcoes"]
-                    and Voluntários[i]["diasServidos"] < metaParaTodos
-                    and diaDeDomingo.dia not in Voluntários[i]["servindoNosDias"]
-                    and Voluntários[i]["domingo"]
-                ):    
-                    if funcao in funcao_para_atributo:
-                        atributo = funcao_para_atributo[funcao]
-                        setattr(diaDeDomingo, atributo, Voluntários[i]["nome"])
-                        
-                    Voluntários[i]["diasServidos"] += 1
-                    Voluntários[i]["servindoNosDias"].append(diaDeDomingo.dia)
-                    break;
-                if Voluntários[i] == Voluntários[-1]:
-                    metaParaTodos += 1 
-                    i = 0
-                else:
-                    i += 1
-
 diasJuntos = objetoDosDiasdeQuinta + objetoDosDiasdeDomingo
 diasJuntosOrdenados = sorted(diasJuntos, key=lambda evento: evento.dia)  
 
@@ -381,12 +328,6 @@ def fazerUmaTabela(listaDosDias, folha, row, column):
 
 def planilhaDaMídia():
 
-    # fazerUmaEscala("Mídia", "story", "domingo")
-    # fazerUmaEscala("Mídia", "mesa", "quinta")
-    # fazerUmaEscala("Mídia", "foto", "domingo")
-    # fazerUmaEscala("Mídia", "story", "quinta")
-    # fazerUmaEscala("Mídia", "mesa", "domingo")
-    # fazerUmaEscala("Mídia", "foto", "quinta")
 
     mídiaSheet = workbook.active
     mídiaSheet.title = "Mídia"
@@ -411,13 +352,6 @@ def planilhaDaMídia():
         fazerUmaTabela(objetoDosDiasdeQuinta, mídiaSheet, row, column)
 
 def planilhaDoFly():
-    # fazerUmaEscala("Fly", "pré", "quinta")
-    # fazerUmaEscala("Fly", "kids", "quinta")
-    # fazerUmaEscala("Fly", "babys", "quinta")
-
-    # fazerUmaEscala("Fly", "pré", "domingo")
-    # fazerUmaEscala("Fly", "kids", "domingo")
-    # fazerUmaEscala("Fly", "babys", "domingo")
 
     flySheet = workbook.create_sheet("Fly")
 
@@ -442,13 +376,6 @@ def planilhaDoFly():
         fazerUmaTabela(objetoDosDiasdeQuinta, flySheet, row, column)
         
 def planilhaDoLouvor():
-    # fazerUmaEscala("Louvor", "ministro", "quinta")
-    # fazerUmaEscala("Louvor", "bateria", "quinta")
-    # fazerUmaEscala("Louvor", "teclado", "quinta")
-
-    # fazerUmaEscala("Louvor", "ministro", "domingo")
-    # fazerUmaEscala("Louvor", "bateria", "domingo")
-    # fazerUmaEscala("Louvor", "teclado", "domingo")
 
     louvorSheet = workbook.create_sheet("Louvor")
 
