@@ -1,114 +1,21 @@
-mes = 12
-ano = 2024
+mes = 3
+ano = 2025
 
 Voluntários = [
-    {
-        "nome": "Fabrício",
-        "quinta": False,
-        "domingo": True,
-        "funcoes": {
-            # Mídia
-            "Mesa": True,
-            # Fly
-            "Kids": True,
-        },
-        "ministerios": ["Mídia", "Fly"],
-        "servindoNosDias": [],
-        "diasDeMesa": 0,
-        "diasDeKids": 0,
-        "diasServidos": 0
-    },
-    {
-        "nome": "Beterraba",
-        "quinta": True,
-        "domingo": True,
-        "funcoes": {
-            # Mídia
-            "Foto": True,
-            "Mesa": True,
-            "Auxiliar": True
-        },
-        "ministerios": ["Fly", "Mídia"],
-        "servindoNosDias": [],
-        "diasDeFoto": 0,
-        "diasDeMesa": 0,
-        "diasServidos": 0
-    },
-    {
-        "nome": "Maju",
-        "quinta": True,
-        "domingo": True,
-        "funcoes": {
-            # Mídia
-            "Foto": True,
-            "Story": True,
-        },
-        "ministerios": ["Mídia"],
-        "servindoNosDias": [],
-        "diasDeFoto": 0,
-        "diasDeStory": 0,
-        "diasServidos": 0
-    },
+
     {
         "nome": "Cynthia",
         "quinta": False,
         "domingo": True,
         "funcoes": {
             # Mídia
-            "Mesa": True,
             "Kids": True,
             "Acolhimento": True
         },
-        "ministerios": ["Mídia", "Fly", "Acolhimento"],
+        "ministerios": ["Fly", "Acolhimento"],
         "servindoNosDias": [],
         "diasDeMesa": 0,
         "diasDeKids": 0,
-        "diasServidos": 0
-    },
-    {
-        "nome": "Silvio",
-        "quinta": False,
-        "domingo": False,
-        "funcoes": {
-            # Mídia
-            "Mesa": True,
-            "Pré": True
-        },
-        "ministerios": ["Mídia", "Fly"],
-        "servindoNosDias": [],
-        "diasDeMesa": 0,
-        "diasDePré": 0,
-        "diasServidos": 0
-    },
-    {
-        "nome": "Jow",
-        "quinta": True,
-        "domingo": True,
-        "funcoes": {
-            # Mídia
-            "Foto": True,
-            "Story": True,
-            "Auxiliar": True
-        },
-        "ministerios": ["Mídia", "Fly"],
-        "servindoNosDias": [],
-        "diasDeFoto": 0,
-        "diasDeStory": 0,
-        "diasServidos": 0
-    },
-    {
-        "nome": "Duda",
-        "quinta": True,
-        "domingo": True,
-        "funcoes": {
-            # Mídia
-            "Foto": True,
-            "Story": True,
-        },
-        "ministerios": ["Mídia", "Fly"],
-        "servindoNosDias": [],
-        "diasDeFoto": 0,
-        "diasDeStory": 0,
         "diasServidos": 0
     },
 
@@ -168,18 +75,6 @@ Voluntários = [
         "diasServidos": 0
     },
     {
-        "nome": "Naiary",
-        "quinta": False,
-        "domingo": True,
-        "funcoes": {
-            "Kids": True,
-        },
-        "ministerios": ["Mídia", "Fly"],
-        "servindoNosDias": [],
-        "diasDeKids": 0,
-        "diasServidos": 0
-    },
-    {
         "nome": "Vanessa",
         "quinta": False,
         "domingo": True,
@@ -212,19 +107,6 @@ Voluntários = [
         "ministerios": ["Louvor", "Fly"],
         "servindoNosDias": [],
         "diasDePré": 0,
-        "diasServidos": 0
-    },
-    {
-        "nome": "Rebeca",
-        "quinta": True,
-        "domingo": True,
-        "funcoes": {
-            "Auxiliar": True,
-            "Backs": True
-        },
-        "ministerios": ["Fly", "Louvor"],
-        "servindoNosDias": [],
-        "diasDeBacks": 0,
         "diasServidos": 0
     },
     {
@@ -265,18 +147,6 @@ Voluntários = [
         "diasServidos": 0
     },
     {
-        "nome": "Gabriel Lívio",
-        "quinta": True,
-        "domingo": False,
-        "funcoes": {
-            "Mesa"
-        },
-        "ministerios": ["Mídia"],
-        "servindoNosDias": [],
-        "diasDeMesa": 0,
-        "diasServidos": 0
-    },
-    {
         "nome": "Josi",
         "quinta": True,
         "domingo": True,
@@ -290,21 +160,6 @@ Voluntários = [
         "diasDeKids": 0,
         "diasDePré": 0,
         "diasDeBabys": 0,
-        "diasServidos": 0
-    },
-    {
-        "nome": "Livia",
-        "quinta": True,
-        "domingo": True,
-        "funcoes": {
-            "Pré": True,
-            "Storys": True,
-            "Backs": True
-        },
-        "ministerios": ["Fly", "Mídia", "Louvor"],
-        "servindoNosDias": [],
-        "diasDePré": 0,
-        "diasDeBacks": 0,
         "diasServidos": 0
     },
     {
@@ -363,20 +218,6 @@ Voluntários = [
         "diasServidos": 0
     },
     {
-        "nome": "Gisele",
-        "quinta": True,
-        "domingo": True,
-        "funcoes": {
-            "Kids": True,
-            "Babys": True,
-        },
-        "ministerios": ["Fly"],
-        "servindoNosDias": [],
-        "diasDeKids": 0,
-        "diasDeBabys": 0,
-        "diasServidos": 0
-    },
-    {
         "nome": "Saulo",
         "quinta": True,
         "domingo": True,
@@ -423,17 +264,6 @@ Voluntários = [
             "Acolhimento": True,
         },
         "ministerios": ["Acolhimento"],
-        "servindoNosDias": [],
-        "diasServidos": 0
-    },
-    {
-        "nome": "Matheus Evangelista",
-        "quinta": True,
-        "domingo": False,
-        "funcoes": {
-            "Acolhimento": True,
-        },
-        "ministerios": ["Acolhimento", "Mídia"],
         "servindoNosDias": [],
         "diasServidos": 0
     },
@@ -556,18 +386,6 @@ Voluntários = [
         "diasServidos": 0
     },
     {
-        "nome": "Gabriel Maju",
-        "quinta": True,
-        "domingo": True,
-        "funcoes": {
-            "Violão": True,
-        },
-        "ministerios": ["Louvor"],
-        "servindoNosDias": [],
-        "diasDeViolão": 0,
-        "diasServidos": 0
-    },
-    {
         "nome": "Pr Jackson",
         "quinta": True,
         "domingo": True,
@@ -603,5 +421,5 @@ Voluntários = [
         "diasDeTeclado": 0,
         "diasServidos": 0
     },
-          
+
 ]

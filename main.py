@@ -8,37 +8,39 @@ import locale
 locale.setlocale(locale.LC_TIME, 'pt_BR.UTF-8')
 
 import copy
-from Voluntários import Voluntários
+from VoluntáriosDaMídia import VoluntáriosDaMídia
 
-from Voluntários import mes, ano
+from VoluntáriosDaMídia import mes, ano
 
-Voluntários = copy.deepcopy(Voluntários)
+## Troquei pra VoluntáriosDamídia
+
+VoluntáriosDaMídia = copy.deepcopy(VoluntáriosDaMídia)
 
 class diaServentia:
     def __init__ (self, dia, tipo):
         self.dia = dia
         self.tipo = tipo
-        # Mídia
+        # VoluntáriosDaMídia
         self.Foto = None
         self.Story = None
         self.Mesa = None
         
-        # Teens
-        self.Pré = None
-        self.Kids = None
-        self.Babys = None
-        self.Auxiliares = []
+        # # Teens
+        # self.Pré = None
+        # self.Kids = None
+        # self.Babys = None
+        # self.Auxiliares = []
 
-        # LOUVOR
-        self.Ministro = None
-        self.Backs = []
-        self.Bateria = None
-        self.Teclado = None
-        self.Guitarra = None
-        self.Baixo = None
-        self.Violão = None
+        # # LOUVOR
+        # self.Ministro = None
+        # self.Backs = []
+        # self.Bateria = None
+        # self.Teclado = None
+        # self.Guitarra = None
+        # self.Baixo = None
+        # self.Violão = None
     
-random.shuffle(Voluntários)
+random.shuffle(VoluntáriosDaMídia)
 
 diasDeQuinta = []
 diasDeDomingo = []
@@ -95,7 +97,7 @@ diasJuntos = objetoDosDiasdeQuinta + objetoDosDiasdeDomingo
 diasJuntosOrdenados = sorted(diasJuntos, key=lambda evento: evento.dia)  
 
 def fazerEscalaPorDia():
-    # random.shuffle(Voluntários)
+    random.shuffle(VoluntáriosDaMídia)
 
     metaPorFunção = {
         "Foto": 1,
@@ -141,56 +143,68 @@ def fazerEscalaPorDia():
             while True:
                 if (
                     # Se o voluntário está no ministério
-                    ministerio in Voluntários[i]["ministerios"]
+                    ministerio in VoluntáriosDaMídia[i]["ministerios"]
                     # Se o voluntário faz a função
-                    and atributo in Voluntários[i]["funcoes"]
+                    and atributo in VoluntáriosDaMídia[i]["funcoes"]
                     # Se o voluntário está dentro do limite
-                    and Voluntários[i][dias_por_atributo[atributo]] < metaPorFunção[atributo]
+                    and VoluntáriosDaMídia[i][dias_por_atributo[atributo]] < metaPorFunção[atributo]
                     # Se o voluntário já não serve no dia
-                    and dia.dia not in Voluntários[i]["servindoNosDias"]
+                    and dia.dia not in VoluntáriosDaMídia[i]["servindoNosDias"]
                     # Se o voluntário serve no dia da semana
-                    and Voluntários[i][dia.tipo]    
+                    and VoluntáriosDaMídia[i][dia.tipo] == True    
                 ):
+                    print("Passou do if")
+                    print(VoluntáriosDaMídia[i])
                     if atributo == "Backs":
                         while True:
                             if (
                                 # Se o voluntário está no ministério
-                                ministerio in Voluntários[i]["ministerios"]
+                                ministerio in VoluntáriosDaMídia[i]["ministerios"]
                                 # Se o voluntário faz a função
-                                and atributo in Voluntários[i]["funcoes"]
+                                and atributo in VoluntáriosDaMídia[i]["funcoes"]
                                 # Se o voluntário está dentro do limite
-                                and Voluntários[i][dias_por_atributo[atributo]] < metaPorFunção[atributo]
+                                and VoluntáriosDaMídia[i][dias_por_atributo[atributo]] < metaPorFunção[atributo]
                                 # Se o voluntário já não serve no dia
-                                and dia.dia not in Voluntários[i]["servindoNosDias"]
+                                and dia.dia not in VoluntáriosDaMídia[i]["servindoNosDias"]
                                 # Se o voluntário serve no dia da semana
-                                and Voluntários[i][dia.tipo]    
+                                and VoluntáriosDaMídia[i][dia.tipo]    
                             ):
 
                                 novaLista = valor
-                                novaLista.append(Voluntários[i]["nome"])
+                                novaLista.append(VoluntáriosDaMídia[i]["nome"])
                                 setattr(dia, atributo, novaLista)
-                                Voluntários[i][dias_por_atributo[atributo]] += 2
-                                Voluntários[i]["diasServidos"] += 1
-                                Voluntários[i]["servindoNosDias"].append(dia.dia)
+                                VoluntáriosDaMídia[i][dias_por_atributo[atributo]] += 2
+                                VoluntáriosDaMídia[i]["diasServidos"] += 1
+                                VoluntáriosDaMídia[i]["servindoNosDias"].append(dia.dia)
 
                                 i = 0
                                 if len(valor) == 2: break
 
-                            elif Voluntários[i] == Voluntários[-1]:
+                            elif VoluntáriosDaMídia[i] == VoluntáriosDaMídia[-1]:
                                 i = 0
                                 metaPorFunção[atributo] += 1
                             else: i += 1
                         if len(valor) == 2:
                             break
                     else: 
-                        setattr(dia, atributo, Voluntários[i]["nome"])
-                        Voluntários[i][dias_por_atributo[atributo]] += 1
-                        Voluntários[i]["diasServidos"] += 1
-                        Voluntários[i]["servindoNosDias"].append(dia.dia)
+                        setattr(dia, atributo, VoluntáriosDaMídia[i]["nome"])
+                        VoluntáriosDaMídia[i][dias_por_atributo[atributo]] += 1
+                        VoluntáriosDaMídia[i]["diasServidos"] += 1
+                        VoluntáriosDaMídia[i]["servindoNosDias"].append(dia.dia)
                         i = 0
                         break
                 
-                elif Voluntários[i] == Voluntários[-1]:
+                elif VoluntáriosDaMídia[i] == VoluntáriosDaMídia[-1]:
+
+                    if (VoluntáriosDaMídia[i][dia.tipo]):
+                        temp = "Sim"
+                    else:
+                        temp = "Não"
+                        print("Membro corresponde ao tipo do dia: " + temp)
+
+
+                    print(VoluntáriosDaMídia[i])
+                    input("")
                     i = 0
                     metaPorFunção[atributo] += 1
                 else:
@@ -224,7 +238,7 @@ def fazerUmaTabela(listaDosDias, folha, row, column):
         titleCell.alignment = Alignment(horizontal="center", vertical="center")
         titleCell.border = border_style
 
-        # Título de voluntários 
+        # Título de VoluntáriosDaMídia 
         row += 1
         folha.cell(row=row, column=column, value=f"Função")
         blackCell = folha.cell(row=row, column=column)
@@ -234,7 +248,7 @@ def fazerUmaTabela(listaDosDias, folha, row, column):
 
         # Título de Função 
         column += 1
-        folha.cell(row=row, column=column, value=f"Voluntários")
+        folha.cell(row=row, column=column, value=f"Mídia")
         blackCell = folha.cell(row=row, column=column)
         blackCell.fill = PatternFill("solid", fgColor = "00333333")
         blackCell.font = Font(color = "00FFFFFF")
@@ -327,29 +341,27 @@ def fazerUmaTabela(listaDosDias, folha, row, column):
         row += 2
 
 def planilhaDaMídia():
-
-
-    mídiaSheet = workbook.active
-    mídiaSheet.title = "Mídia"
+    MídiaSheet = workbook.active
+    MídiaSheet.title = "Mídia"
     if objetoDosDiasdeDomingo[0].dia > objetoDosDiasdeQuinta[0].dia:
 
         row = 1
         column = 1
-        fazerUmaTabela(objetoDosDiasdeQuinta, mídiaSheet, row, column)
+        fazerUmaTabela(objetoDosDiasdeQuinta, MídiaSheet, row, column)
 
         row = 1
         column = 4
-        fazerUmaTabela(objetoDosDiasdeDomingo, mídiaSheet, row, column)
+        fazerUmaTabela(objetoDosDiasdeDomingo, MídiaSheet, row, column)
 
     if objetoDosDiasdeQuinta[0].dia > objetoDosDiasdeDomingo[0].dia:
 
         row = 1
         column = 1
-        fazerUmaTabela(objetoDosDiasdeDomingo, mídiaSheet, row, column)
+        fazerUmaTabela(objetoDosDiasdeDomingo, MídiaSheet, row, column)
         
         row = 1
         column = 4
-        fazerUmaTabela(objetoDosDiasdeQuinta, mídiaSheet, row, column)
+        fazerUmaTabela(objetoDosDiasdeQuinta, MídiaSheet, row, column)
 
 def planilhaDoFly():
 
@@ -458,7 +470,7 @@ def planilhasDosDias():
 
                 daysSheet.merge_cells(start_row=row, start_column=column, end_row=row, end_column=column + 1)
                 celulaMinisterio = daysSheet.cell(row=row, column=column)
-                celulaMinisterio.value = f"MÍDIA"
+                celulaMinisterio.value = f"Mídia"
                 celulaMinisterio.fill = PatternFill("solid", fgColor="00969696")
                 celulaMinisterio.font = Font(color="00FFFFFF")
                 celulaMinisterio.alignment = Alignment(horizontal="center", vertical="center")
@@ -517,23 +529,23 @@ def relatórioDePessoas():
     row = 1 
     column = 1
     i = 0
-    while i != len(Voluntários):   
+    while i != len(VoluntáriosDaMídia):   
         cell = relatório.cell(row=row, column=column)
-        cell.value = Voluntários[i]["nome"]
+        cell.value = VoluntáriosDaMídia[i]["nome"]
         column += 1
         cell = relatório.cell(row=row, column=column)
-        cell.value = Voluntários[i]["diasServidos"]
+        cell.value = VoluntáriosDaMídia[i]["diasServidos"]
         column -= 1
         row += 1
         i += 1
 
 fazerEscalaPorDia()
 
-planilhaDoFly()
 planilhaDaMídia()
-planilhasDosDias()
-planilhaDoLouvor()
+# planilhaDoFly()
+# planilhasDosDias()
+# planilhaDoLouvor()
 relatórioDePessoas()
 
 
-workbook.save(f"Escala.xlsx")
+workbook.save("Escala Da Mídia.xlsx")
