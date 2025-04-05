@@ -1,4 +1,4 @@
-mes = 3
+mes = 4
 ano = 2025
 
 VoluntáriosDaMídia = [
@@ -44,7 +44,7 @@ VoluntáriosDaMídia = [
             "Kids": True,
         },
         "ministerios": ["Mídia", "Fly"],
-        "servindoNosDias": [9, 28],
+        "servindoNosDias": [3 ,17, 20, 10],
         "diasDeMesa": 0,
         "diasDeKids": 0,
         "diasServidos": 0
@@ -60,7 +60,7 @@ VoluntáriosDaMídia = [
             "Auxiliar": True
         },
         "ministerios": ["Fly", "Mídia"],
-        "servindoNosDias": [],
+        "servindoNosDias": [20],
         "diasDeFoto": 0,
         "diasDeMesa": 0,
         "diasServidos": 0
@@ -68,14 +68,14 @@ VoluntáriosDaMídia = [
     {
         "nome": "Maju",
         "quinta": False,
-        "domingo": True,
+        "domingo": False,
         "funcoes": {
             # Mídia
             "Foto": True,
             "Story": True,
         },
         "ministerios": ["Mídia"],
-        "servindoNosDias": [6, 9, 13, 20, 23, 27],
+        "servindoNosDias": [],
         "diasDeFoto": 0,
         "diasDeStory": 0,
         "diasServidos": 0
@@ -89,7 +89,7 @@ VoluntáriosDaMídia = [
             "Mesa": True,
         },
         "ministerios": ["Mídia"],
-        "servindoNosDias": [2, 30],
+        "servindoNosDias": [],
         "diasDeMesa": 0,
         "diasServidos": 0
     }, 
@@ -109,7 +109,7 @@ VoluntáriosDaMídia = [
     {
         "nome": "Nath",
         "quinta": True,
-        "domingo": False,
+        "domingo": True,
         "funcoes": {
             # Mídia
             "Mesa": True,
@@ -121,15 +121,15 @@ VoluntáriosDaMídia = [
     },
         {
         "nome": "Duda",
-        "quinta": False,
-        "domingo": False,
+        "quinta": True,
+        "domingo": True,
         "funcoes": {
             # Mídia
             "Foto": True,
             "Story": True,
         },
         "ministerios": ["Mídia", "Fly"],
-        "servindoNosDias": [],
+        "servindoNosDias": [24],
         "diasDeFoto": 0,
         "diasDeStory": 0,
         "diasServidos": 0
@@ -161,6 +161,19 @@ VoluntáriosDaMídia = [
         "ministerios": ["Mídia"],
         "servindoNosDias": [],
         "diasDeMesa": 0,
+        "diasServidos": 0
+    },
+        {
+        "nome": "Leticia",
+        "quinta": True,
+        "domingo": True,
+        "funcoes": {
+            # Mídia
+            "Story": True,
+        },
+        "ministerios": ["Fly", "Mídia"],
+        "servindoNosDias": [10, 27],
+        "diasDeStory": 0,
         "diasServidos": 0
     },
 ]

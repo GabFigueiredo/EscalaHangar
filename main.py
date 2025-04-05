@@ -153,8 +153,6 @@ def fazerEscalaPorDia():
                     # Se o voluntário serve no dia da semana
                     and VoluntáriosDaMídia[i][dia.tipo] == True    
                 ):
-                    print("Passou do if")
-                    print(VoluntáriosDaMídia[i])
                     if atributo == "Backs":
                         while True:
                             if (
@@ -200,11 +198,7 @@ def fazerEscalaPorDia():
                         temp = "Sim"
                     else:
                         temp = "Não"
-                        print("Membro corresponde ao tipo do dia: " + temp)
 
-
-                    print(VoluntáriosDaMídia[i])
-                    input("")
                     i = 0
                     metaPorFunção[atributo] += 1
                 else:
