@@ -1,2 +1,4 @@
-EscalaDaMídia.xlsx
-.gitgnore
+Escala.xlsx
+__pycache__
+Voluntários.py
+.gitignore
